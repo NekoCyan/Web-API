@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Minimal.Database.Models;
+using MinimalAPI.Database.Models;
 
-namespace Minimal.Database
+namespace MinimalAPI.Database
 {
     public class TodoDb : DbContext
     {

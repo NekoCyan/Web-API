@@ -1,0 +1,59 @@
+﻿@MinimalAPI_HostAddress=https://localhost:7284
+
+GET {{MinimalAPI_HostAddress}}/
+
+###
+
+POST {{MinimalAPI_HostAddress}}/todoitems
+Content-Type: application/json
+
+{
+  "name": "Walk dog",
+  "isComplete": true
+}
+###
+POST {{MinimalAPI_HostAddress}}/todoitems
+Content-Type: application/json
+
+{
+  "name": "Play game",
+  "isComplete": false
+}
+###
+
+GET {{MinimalAPI_HostAddress}}/todoitems
+
+###
+
+GET {{MinimalAPI_HostAddress}}/todoitems/1
+
+###
+
+GET {{MinimalAPI_HostAddress}}/todoitems/2
+
+###
+
+GET {{MinimalAPI_HostAddress}}/todoitems/3
+
+###
+
+PUT {{MinimalAPI_HostAddress}}/todoitems/2
+Content-Type: application/json
+
+{
+  "name": "Play game",
+  "IsComplete": true
+}
+###
+
+GET {{MinimalAPI_HostAddress}}/todoitems/complete
+
+###
+
+DELETE {{MinimalAPI_HostAddress}}/todoitems/2
+
+###
+
+GET {{MinimalAPI_HostAddress}}/todoitems/complete
+
+###

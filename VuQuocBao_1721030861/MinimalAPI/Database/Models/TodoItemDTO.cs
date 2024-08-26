@@ -1,4 +1,4 @@
-﻿namespace Minimal.Database.Models
+﻿namespace MinimalAPI.Database.Models
 {
     public class TodoItemDTO
     {
