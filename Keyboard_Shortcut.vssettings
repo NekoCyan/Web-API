@@ -1,0 +1,72 @@
+<UserSettings>
+    <ApplicationIdentity version="17.0" />
+    <Category name="Environment_Group" RegisteredName="Environment_Group">
+        <Category name="Environment_KeyBindings" Category="{F09035F1-80D2-4312-8EC4-4D354A4BCB4C}"
+            Package="{DA9FB551-C724-11d0-AE1F-00A0C90FFFC3}"
+            RegisteredName="Environment_KeyBindings" PackageName="Visual Studio Environment Package">
+            <Version>17.0.0.0</Version>
+            <KeyboardShortcuts>
+                <DefaultShortcuts>
+                    <Shortcut Command="View.ViewCode" Scope="Global">F7</Shortcut>
+                    <Shortcut Command="View.ViewDesigner" Scope="Global">Shift+F7</Shortcut>
+                </DefaultShortcuts>
+                <ShortcutsScheme>Visual Studio Code</ShortcutsScheme>
+                <UserShortcuts>
+                    <!-- Remove conflict shortcut -->
+                    <RemoveShortcut Command="Debug.Immediate" Scope="Global">Ctrl+Alt+I</RemoveShortcut>
+                    <RemoveShortcut Command="View.CallHierarchy" Scope="Global">Ctrl+Alt+K</RemoveShortcut>
+
+                    <!-- Add shortcut -->
+                    <!-- Cursor Down -->
+                    <Shortcut Command="Edit.LineDown" Scope="Text Editor">Alt+K</Shortcut>
+                    <!-- Cursor Up -->
+                    <Shortcut Command="Edit.LineUp" Scope="Text Editor">Alt+I</Shortcut>
+                    <!-- Cursor Right -->
+                    <Shortcut Command="Edit.CharRight" Scope="Text Editor">Alt+L</Shortcut>
+                    <!-- Cursor Left -->
+                    <Shortcut Command="Edit.CharLeft" Scope="Text Editor">Alt+J</Shortcut>
+                    <!-- Cursor Down Select -->
+                    <Shortcut Command="Edit.LineDownExtend" Scope="Text Editor">Alt+Shift+K</Shortcut>
+                    <!-- Cursor Up Select -->
+                    <Shortcut Command="Edit.LineUpExtend" Scope="Text Editor">Alt+Shift+I</Shortcut>
+                    <!-- Cursor Right Select -->
+                    <Shortcut Command="Edit.CharRightExtend" Scope="Text Editor">Alt+Shift+L</Shortcut>
+                    <!-- Cursor Left Select -->
+                    <Shortcut Command="Edit.CharLeftExtend" Scope="Text Editor">Alt+Shift+J</Shortcut>
+                    <!-- Cursor Word End Right -->
+                    <Shortcut Command="Edit.WordNext" Scope="Text Editor">Alt+Ctrl+L</Shortcut>
+                    <!-- Cursor Word Start Left -->
+                    <Shortcut Command="Edit.WordPrevious" Scope="Text Editor">Alt+Ctrl+J</Shortcut>
+                    <!-- Cursor End Select -->
+                    <Shortcut Command="Edit.LineEndExtend" Scope="Text Editor">Alt+Shift+O</Shortcut>
+                    <Shortcut Command="Edit.LineEndExtend" Scope="Text Editor">Alt+Shift+Ctrl+O</Shortcut>
+                    <!-- Cursor Home Select -->
+                    <Shortcut Command="Edit.LineStartExtend" Scope="Text Editor">Alt+Shift+U</Shortcut>
+                    <Shortcut Command="Edit.LineStartExtend" Scope="Text Editor">Alt+Shift+Ctrl+U</Shortcut>
+                    <!-- Cursor End -->
+                    <Shortcut Command="Edit.LineEnd" Scope="Text Editor">Ctrl+L</Shortcut>
+                    <!-- Cursor Home -->
+                    <Shortcut Command="Edit.LineStart" Scope="Text Editor">Ctrl+J</Shortcut>
+                    <!-- Go To Declaration -->
+                    <Shortcut Command="Edit.GoToDefinition" Scope="Text Editor">Ctrl+Alt+Y</Shortcut>
+                    <!-- Cursor Page Up -->
+                    <Shortcut Command="Edit.PageUp" Scope="Text Editor">Alt+Ctrl+U</Shortcut>
+                    <!-- Cursor Page Down -->
+                    <Shortcut Command="Edit.PageDown" Scope="Text Editor">Alt+Ctrl+O</Shortcut>
+                    <!-- Cursor Line End -->
+                    <Shortcut Command="Edit.LineEnd" Scope="Text Editor">Alt+O</Shortcut>
+                    <!-- Cursor Line Start -->
+                    <Shortcut Command="Edit.LineStart" Scope="Text Editor">Alt+U</Shortcut>
+                    <!-- Cursor Column Select Up -->
+                    <Shortcut Command="Edit.LineUpExtendColumn" Scope="Text Editor">Ctrl+I</Shortcut>
+                    <!-- Cursor Column Select Down -->
+                    <Shortcut Command="Edit.LineDownExtendColumn" Scope="Text Editor">Ctrl+K</Shortcut>
+                    <!-- Scroll Line Up -->
+                    <Shortcut Command="Edit.ScrollLineUp" Scope="Text Editor">Ctrl+Alt+I</Shortcut>
+                    <!-- Scroll Line Down -->
+                    <Shortcut Command="Edit.ScrollLineDown" Scope="Text Editor">Ctrl+Alt+K</Shortcut>
+                </UserShortcuts>
+            </KeyboardShortcuts>
+        </Category>
+    </Category>
+</UserSettings>
