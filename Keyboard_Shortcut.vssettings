@@ -12,11 +12,13 @@
                 </DefaultShortcuts>
                 <ShortcutsScheme>Visual Studio Code</ShortcutsScheme>
                 <UserShortcuts>
-                    <!-- Remove conflict shortcut -->
+                    <!-- Remove Conflict Shortcut -->
                     <RemoveShortcut Command="Debug.Immediate" Scope="Global">Ctrl+Alt+I</RemoveShortcut>
                     <RemoveShortcut Command="View.CallHierarchy" Scope="Global">Ctrl+Alt+K</RemoveShortcut>
+                    <RemoveShortcut Command="Edit.ReverseIncrementalSearch" Scope="Text Editor">Shift+Ctrl+I</RemoveShortcut>
+                    <RemoveShortcut Command="Edit.LineDelete" Scope="Text Editor">Shift+Ctrl+K</RemoveShortcut>
 
-                    <!-- Add shortcut -->
+                    <!-- Add Shortcut -->
                     <!-- Cursor Down -->
                     <Shortcut Command="Edit.LineDown" Scope="Text Editor">Alt+K</Shortcut>
                     <!-- Cursor Up -->
@@ -65,6 +67,10 @@
                     <Shortcut Command="Edit.ScrollLineUp" Scope="Text Editor">Ctrl+Alt+I</Shortcut>
                     <!-- Scroll Line Down -->
                     <Shortcut Command="Edit.ScrollLineDown" Scope="Text Editor">Ctrl+Alt+K</Shortcut>
+                    <!-- Move Selected Line Up -->
+                    <Shortcut Command="Edit.MoveSelectedLinesUp" Scope="Text Editor">Shift+Ctrl+I</Shortcut>
+                    <!-- Move Selected Line Down -->
+                    <Shortcut Command="Edit.MoveSelectedLinesDown" Scope="Text Editor">Shift+Ctrl+K</Shortcut>
                 </UserShortcuts>
             </KeyboardShortcuts>
         </Category>
