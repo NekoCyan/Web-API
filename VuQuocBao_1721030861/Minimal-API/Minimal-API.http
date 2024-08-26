@@ -1,11 +1,11 @@
 ﻿
-@API_HostAddress=https://localhost:7284
+@MinimalAPI_HostAddress=https://localhost:7284
 
-GET {{API_HostAddress}}/
+GET {{MinimalAPI_HostAddress}}/
 
 ###
 
-POST {{API_HostAddress}}/todoitems
+POST {{MinimalAPI_HostAddress}}/todoitems
 Content-Type: application/json
 
 {
@@ -13,7 +13,7 @@ Content-Type: application/json
   "isComplete": true
 }
 ###
-POST {{API_HostAddress}}/todoitems
+POST {{MinimalAPI_HostAddress}}/todoitems
 Content-Type: application/json
 
 {
@@ -22,23 +22,23 @@ Content-Type: application/json
 }
 ###
 
-GET {{API_HostAddress}}/todoitems
+GET {{MinimalAPI_HostAddress}}/todoitems
 
 ###
 
-GET {{API_HostAddress}}/todoitems/1
+GET {{MinimalAPI_HostAddress}}/todoitems/1
 
 ###
 
-GET {{API_HostAddress}}/todoitems/2
+GET {{MinimalAPI_HostAddress}}/todoitems/2
 
 ###
 
-GET {{API_HostAddress}}/todoitems/3
+GET {{MinimalAPI_HostAddress}}/todoitems/3
 
 ###
 
-PUT {{API_HostAddress}}/todoitems/2
+PUT {{MinimalAPI_HostAddress}}/todoitems/2
 Content-Type: application/json
 
 {
@@ -47,14 +47,14 @@ Content-Type: application/json
 }
 ###
 
-GET {{API_HostAddress}}/todoitems/complete
+GET {{MinimalAPI_HostAddress}}/todoitems/complete
 
 ###
 
-DELETE {{API_HostAddress}}/todoitems/2
+DELETE {{MinimalAPI_HostAddress}}/todoitems/2
 
 ###
 
-GET {{API_HostAddress}}/todoitems/complete
+GET {{MinimalAPI_HostAddress}}/todoitems/complete
 
 ###
