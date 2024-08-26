@@ -1,0 +1,60 @@
+﻿
+@API_HostAddress=https://localhost:7284
+
+GET {{API_HostAddress}}/
+
+###
+
+POST {{API_HostAddress}}/todoitems
+Content-Type: application/json
+
+{
+  "name": "Walk dog",
+  "isComplete": true
+}
+###
+POST {{API_HostAddress}}/todoitems
+Content-Type: application/json
+
+{
+  "name": "Play game",
+  "isComplete": false
+}
+###
+
+GET {{API_HostAddress}}/todoitems
+
+###
+
+GET {{API_HostAddress}}/todoitems/1
+
+###
+
+GET {{API_HostAddress}}/todoitems/2
+
+###
+
+GET {{API_HostAddress}}/todoitems/3
+
+###
+
+PUT {{API_HostAddress}}/todoitems/2
+Content-Type: application/json
+
+{
+  "name": "Play game",
+  "IsComplete": true
+}
+###
+
+GET {{API_HostAddress}}/todoitems/complete
+
+###
+
+DELETE {{API_HostAddress}}/todoitems/2
+
+###
+
+GET {{API_HostAddress}}/todoitems/complete
+
+###
