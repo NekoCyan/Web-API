@@ -17,6 +17,7 @@
                     <RemoveShortcut Command="View.CallHierarchy" Scope="Global">Ctrl+Alt+K</RemoveShortcut>
                     <RemoveShortcut Command="Edit.ReverseIncrementalSearch" Scope="Text Editor">Shift+Ctrl+I</RemoveShortcut>
                     <RemoveShortcut Command="Edit.LineDelete" Scope="Text Editor">Shift+Ctrl+K</RemoveShortcut>
+                    <RemoveShortcut Command="View.DataSources" Scope="Global">Shift+Alt+D</RemoveShortcut>
 
                     <!-- Add Shortcut -->
                     <!-- Cursor Down -->
@@ -71,6 +72,8 @@
                     <Shortcut Command="Edit.MoveSelectedLinesUp" Scope="Text Editor">Shift+Ctrl+I</Shortcut>
                     <!-- Move Selected Line Down -->
                     <Shortcut Command="Edit.MoveSelectedLinesDown" Scope="Text Editor">Shift+Ctrl+K</Shortcut>
+                    <!-- Remove Unused References -->
+                    <Shortcut Command="EditorContextMenus.CodeWindow.RemoveAndSort" Scope="Text Editor">Shift+Alt+D</Shortcut>
                 </UserShortcuts>
             </KeyboardShortcuts>
         </Category>
