@@ -1,5 +1,33 @@
 -- https://drive.google.com/file/d/17fWVQ_cKy8NTUSRgIy2hTlzQz2cWjZmg/view
 
+-- drop table PRODUCTS;
+-- drop table SUPPLIERS;
+-- drop table CATEGORIES;
+
+create table SUPPLIERS (
+	SupplierID int identity primary key not null,
+	CompanyName nvarchar(50) not null,
+	Phone nvarchar(20) null
+)
+
+create table CATEGORIES (
+	CategoryID int identity primary key not null,
+	CategoryName nvarchar(30) not null,
+	Description nvarchar(150) null
+)
+
+CREATE TABLE PRODUCTS (
+	ProductID int identity primary key not null,
+	ProductName nvarchar(50) not null,
+	SupplierID int null,
+	CategoryID int null,
+	QuantityPerUnit nvarchar(30) null,
+	UnitPrice money null,
+	Discontinued bit not null,
+	constraint FK_PRODUCTS_SUPPLIERS foreign key (SupplierID) references SUPPLIERS(SupplierID),
+	constraint FK_PRODUCTS_CATEGORIES foreign key (CategoryID) references CATEGORIES(CategoryID)
+)
+
 USE [EFcoreDemo]
 GO
 SET IDENTITY_INSERT [dbo].[Categories] ON 
