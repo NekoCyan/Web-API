@@ -10,6 +10,6 @@ namespace ControllerAPI.Database
         {
         }
 
-        public DbSet<TodoModel> TodoItems { get; set; } = null!;
+        public DbSet<Todo> TodoItems { get; set; } = null!;
     }
 }

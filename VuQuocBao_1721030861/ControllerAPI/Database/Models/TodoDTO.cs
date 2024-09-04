@@ -1,6 +1,6 @@
 ﻿namespace ControllerAPI.Database.Models
 {
-    public class TodoItemDTO
+    public class TodoDTO
     {
         public long Id { get; set; }
         public string? Name { get; set; }
