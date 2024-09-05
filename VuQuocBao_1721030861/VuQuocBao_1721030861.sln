@@ -5,7 +5,7 @@ VisualStudioVersion = 17.11.35219.272
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinimalAPI", "MinimalAPI\MinimalAPI.csproj", "{CB900FF8-19FE-4E6C-9753-BD522583A401}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControllerAPI", "ControllerAPI\ControllerAPI.csproj", "{E385362C-C3EB-4A9A-B2AD-CB58558E6528}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControllerAPI_1721030861", "ControllerAPI_1721030861\ControllerAPI_1721030861.csproj", "{E385362C-C3EB-4A9A-B2AD-CB58558E6528}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

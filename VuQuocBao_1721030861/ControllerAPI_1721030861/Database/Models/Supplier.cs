@@ -1,4 +1,4 @@
-﻿namespace ControllerAPI.Database.Models
+﻿namespace ControllerAPI_1721030861.Database.Models
 {
     public class Supplier
     {

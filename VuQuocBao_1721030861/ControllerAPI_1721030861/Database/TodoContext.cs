@@ -1,7 +1,7 @@
-﻿using ControllerAPI.Database.Models;
+﻿using ControllerAPI_1721030861.Database.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace ControllerAPI.Database
+namespace ControllerAPI_1721030861.Database
 {
     public class TodoContext : DbContext
     {

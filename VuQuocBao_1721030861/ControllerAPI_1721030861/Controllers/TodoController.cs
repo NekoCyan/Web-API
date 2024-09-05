@@ -1,9 +1,9 @@
-﻿using ControllerAPI.Database;
-using ControllerAPI.Database.Models;
+﻿using ControllerAPI_1721030861.Database;
+using ControllerAPI_1721030861.Database.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace ControllerAPI.Controllers
+namespace ControllerAPI_1721030861.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
