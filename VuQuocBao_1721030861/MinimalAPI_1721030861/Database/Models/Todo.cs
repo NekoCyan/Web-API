@@ -1,4 +1,4 @@
-﻿namespace MinimalAPI.Database.Models
+﻿namespace MinimalAPI_1721030861.Database.Models
 {
     public class Todo
     {
