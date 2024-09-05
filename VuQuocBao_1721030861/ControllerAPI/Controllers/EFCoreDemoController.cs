@@ -20,14 +20,14 @@ namespace ControllerAPI.Controllers
         }
 
         [HttpGet] // Bai 1
-        public async Task<ActionResult<IEnumerable<Product>>> GetAllProducts()
+        public async Task<ActionResult<IEnumerable<Product>>> GetAllProductsBai1()
         {
             return await _context.Products
                 .ToListAsync();
         }
 
         [HttpGet] // Bai 2
-        public async Task<ActionResult<IEnumerable<string>>> GetAllNamesOfProduct()
+        public async Task<ActionResult<IEnumerable<string>>> GetAllNamesOfProductBai2()
         {
             return await _context.Products
                 .Select(x => x.ProductName)
@@ -35,7 +35,7 @@ namespace ControllerAPI.Controllers
         }
 
         [HttpGet] // Bai 3
-        public async Task<ActionResult<IEnumerable<Product>>> GetAllProductsThatNotDiscontinued() // Meaning Continue
+        public async Task<ActionResult<IEnumerable<Product>>> GetAllProductsThatNotDiscontinuedBai3() // Meaning Continue
         {
             return await _context.Products
                 .Where(x => !x.Discontinued)
@@ -43,7 +43,7 @@ namespace ControllerAPI.Controllers
         }
 
         [HttpGet] // Bai 4
-        public async Task<ActionResult<IEnumerable<Product>>> GetAllProductsThatHavePricesMoreThan20()
+        public async Task<ActionResult<IEnumerable<Product>>> GetAllProductsThatHavePricesMoreThan20Bai4()
         {
             return await _context.Products
                 .Where(x => x.UnitPrice > 20)
@@ -51,7 +51,7 @@ namespace ControllerAPI.Controllers
         }
 
         [HttpGet] // Bai 5
-        public async Task<ActionResult<IEnumerable<Product>>> GetAllProductsThatHaveNameByAscending()
+        public async Task<ActionResult<IEnumerable<Product>>> GetAllProductsThatHaveNameByAscendingBai5()
         {
             return await _context.Products
                 .OrderBy(x => x.ProductName)
@@ -59,7 +59,7 @@ namespace ControllerAPI.Controllers
         }
 
         [HttpGet] // Bai 6
-        public async Task<ActionResult<int>> GetProductsCount()
+        public async Task<ActionResult<int>> GetProductsCountBai6()
         {
             return await _context.Products.CountAsync();
         }
@@ -75,7 +75,7 @@ namespace ControllerAPI.Controllers
             }
         }
         [HttpGet] // Bai 7
-        public async Task<ActionResult<IEnumerable<ProductNameAndSupplierName>>> GetAllProductsNameAndNameOfSupplier()
+        public async Task<ActionResult<IEnumerable<ProductNameAndSupplierName>>> GetAllProductsNameAndNameOfSupplierBai7()
         {
             return await _context.Products
                 .Include(x => x.Supplier)
@@ -84,7 +84,7 @@ namespace ControllerAPI.Controllers
         }
 
         [HttpGet] // Bai 8
-        public async Task<ActionResult<IEnumerable<Product>>> GetAllProductsThatGroupByCategoryId([Required] int CategoryId)
+        public async Task<ActionResult<IEnumerable<Product>>> GetAllProductsThatGroupByCategoryIdBai8([Required] int CategoryId)
         {
             return await _context.Products
                 .Where(x => x.CategoryId == CategoryId)
@@ -92,7 +92,7 @@ namespace ControllerAPI.Controllers
         }
 
         [HttpGet] // Bai 9
-        public async Task<ActionResult<IEnumerable<Product>>> GetAllProductsThatGroupBySupplierId([Required] int SupplierId)
+        public async Task<ActionResult<IEnumerable<Product>>> GetAllProductsThatGroupBySupplierIdBai9([Required] int SupplierId)
         {
             return await _context.Products
                 .Where(x => x.SupplierId == SupplierId)
@@ -100,7 +100,7 @@ namespace ControllerAPI.Controllers
         }
 
         [HttpGet] // Bai 10
-        public async Task<ActionResult<IEnumerable<Supplier>>> GetAllSuppliersThatHaveAtLeastOneProduct()
+        public async Task<ActionResult<IEnumerable<Supplier>>> GetAllSuppliersThatHaveAtLeastOneProductBai10()
         {
             return await _context.Suppliers
                 .Where(x => x.Products.Count > 0)
@@ -108,19 +108,19 @@ namespace ControllerAPI.Controllers
         }
 
         [HttpGet] // Bai 11
-        public async Task<ActionResult<Product>> GetProductThatHighestUnitPrice()
+        public async Task<ActionResult<Product>> GetProductThatHighestUnitPriceBai11()
         {
             return await _context.Products.OrderByDescending(x => x.UnitPrice).FirstOrDefaultAsync();
         }
 
         [HttpGet] // Bai 12
-        public async Task<ActionResult<Product>> GetProductThatLowestUnitPrice()
+        public async Task<ActionResult<Product>> GetProductThatLowestUnitPriceBai12()
         {
             return await _context.Products.OrderBy(x => x.UnitPrice).FirstOrDefaultAsync();
         }
 
         [HttpGet] // Bai 13
-        public async Task<ActionResult<IEnumerable<Product>>> GetAllProductsThatIncludeWithCategoryName()
+        public async Task<ActionResult<IEnumerable<Product>>> GetAllProductsThatIncludeWithCategoryNameBai13()
         {
             return await _context.Products
                 .Include(x => x.Category)
@@ -135,6 +135,141 @@ namespace ControllerAPI.Controllers
                     Discontinued = x.Discontinued,
                     Category = x.Category,
                 })
+                .ToListAsync();
+        }
+
+        [HttpGet] // Bai 14
+        public async Task<ActionResult<IEnumerable<Product>>> GetAllProductsThatIncludeWithSupplierNameBai14()
+        {
+            return await _context.Products
+                .Include(x => x.Supplier)
+                .Select(x => new Product
+                {
+                    ProductId = x.ProductId,
+                    ProductName = x.ProductName,
+                    SupplierId = x.SupplierId,
+                    CategoryId = x.CategoryId,
+                    QuantityPerUnit = x.QuantityPerUnit,
+                    UnitPrice = x.UnitPrice,
+                    Discontinued = x.Discontinued,
+                    Supplier = x.Supplier,
+                })
+                .ToListAsync();
+        }
+
+        [HttpGet] // Bai 15
+        public async Task<ActionResult<IEnumerable<Product>>> GetAllProductsThatEqualsToAverageUnitPricesOfAllProductsBai15()
+        {
+            return await _context.Products
+                .Where(x => x.UnitPrice == _context.Products.Average(x => x.UnitPrice))
+                .ToListAsync();
+        }
+
+        [HttpGet] // Bai 16 - bug
+        public async Task<ActionResult<IEnumerable<int>>> GetTotalCountOfProductsForEachCategoryBai16()
+        {
+            return await _context.Categories
+                .Select(x => x.Products.Count)
+                .ToListAsync();
+        }
+
+        public class GetAllCategoriesWithTotalCountOfProducts
+        {
+            public Category Categories { get; set; }
+            public int ProductsCount { get; set; }
+            public GetAllCategoriesWithTotalCountOfProducts(Category category)
+            {
+                ProductsCount = category.Products.Count;
+                category.Products = new List<Product>();
+                Categories = category;
+            }
+        }
+        [HttpGet] // Bai 17 - bug
+        public async Task<ActionResult<IEnumerable<GetAllCategoriesWithTotalCountOfProducts>>> GetAllCategoriesIncludeWithTotalCountOfProductsBai17()
+        {
+            return await _context.Categories
+                .Include(x => x.Products)
+                .Select(x => new GetAllCategoriesWithTotalCountOfProducts(x))
+                .ToListAsync();
+        }
+
+        [HttpGet] // Bai 18
+        public async Task<ActionResult<IEnumerable<Supplier>>> GetAllSuppliersThatHaveNoProductBai18()
+        {
+            return await _context.Suppliers
+                .Where(x => x.Products.Count == 0)
+                .ToListAsync();
+        }
+
+        [HttpGet] // Bai 19
+        public async Task<ActionResult<IEnumerable<Product>>> GetAllProductsThatGreaterThanAverageUnitPricesOfAllProductsBai19()
+        {
+            return await _context.Products
+                 .Where(x => x.UnitPrice > _context.Products.Average(x => x.UnitPrice))
+                 .ToListAsync();
+        }
+
+        public class GetAllNamesOfProductSupplierCategory
+        {
+            public string ProductName { get; set; } = null!;
+            public string SupplierName { get; set; } = null!;
+            public string CategoryName { get; set; } = null!;
+            public GetAllNamesOfProductSupplierCategory(Product product)
+            {
+                ProductName = product.ProductName;
+                SupplierName = product.Supplier!.CompanyName;
+                CategoryName = product.Category!.CategoryName;
+            }
+        }
+        [HttpGet] // Bai 20
+        public async Task<ActionResult<IEnumerable<GetAllNamesOfProductSupplierCategory>>> GetAllNamesOfProductAndSupplierAndCategoryBai20()
+        {
+            return await _context.Products
+                .Include(x => x.Supplier)
+                .Include(x => x.Category)
+                .Select(x => new GetAllNamesOfProductSupplierCategory(x))
+                .ToListAsync();
+        }
+
+        [HttpGet] // Bai 21
+        public async Task<ActionResult<IEnumerable<Product>>> GetAllProductsThatDiscontinuedAndUnitPriceGreaterThan50Bai21()
+        {
+            return await _context.Products
+                .Where(x => x.Discontinued && x.UnitPrice > 50)
+                .ToListAsync();
+        }
+
+        [HttpGet] // Bai 22
+        public async Task<ActionResult<Category>> GetCategoryThatHaveMostProductsBai22()
+        {
+            return await _context.Categories
+                .OrderByDescending(x => x.Products.Count)
+                .FirstOrDefaultAsync();
+        }
+
+        [HttpGet] // Bai 23
+        public async Task<ActionResult<Supplier>> GetSupplierThatHaveMostProductsBai23()
+        {
+            return await _context.Suppliers
+                .OrderByDescending(x => x.Products.Count)
+                .FirstOrDefaultAsync();
+        }
+
+        public class GetAllProductsWithSupplierTotalProductsCount
+        {
+            public Product products { get; set; }
+            public int SupplierProductsCount { get; set; }
+            public GetAllProductsWithSupplierTotalProductsCount(Product product, int count)
+            {
+                products = product;
+                SupplierProductsCount = count;
+            }
+        }
+        [HttpGet] // Bai 24
+        public async Task<ActionResult<IEnumerable<GetAllProductsWithSupplierTotalProductsCount>>> GetAllProductsWithSupplierWhichIncludeTotalProductsCountBai24()
+        {
+            return await _context.Products
+                .Select(x => new GetAllProductsWithSupplierTotalProductsCount(x, _context.Products.Count(y => y.SupplierId == x.SupplierId)))
                 .ToListAsync();
         }
     }
