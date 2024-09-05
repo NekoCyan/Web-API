@@ -110,13 +110,13 @@ namespace ControllerAPI.Controllers
         [HttpGet] // Bai 11
         public async Task<ActionResult<Product>> GetProductThatHighestUnitPriceBai11()
         {
-            return await _context.Products.OrderByDescending(x => x.UnitPrice).FirstOrDefaultAsync();
+            return await _context.Products.OrderByDescending(x => x.UnitPrice).FirstOrDefaultAsync() ?? new Product();
         }
 
         [HttpGet] // Bai 12
         public async Task<ActionResult<Product>> GetProductThatLowestUnitPriceBai12()
         {
-            return await _context.Products.OrderBy(x => x.UnitPrice).FirstOrDefaultAsync();
+            return await _context.Products.OrderBy(x => x.UnitPrice).FirstOrDefaultAsync() ?? new Product();
         }
 
         [HttpGet] // Bai 13
@@ -244,7 +244,7 @@ namespace ControllerAPI.Controllers
         {
             return await _context.Categories
                 .OrderByDescending(x => x.Products.Count)
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync() ?? new Category();
         }
 
         [HttpGet] // Bai 23
@@ -252,7 +252,7 @@ namespace ControllerAPI.Controllers
         {
             return await _context.Suppliers
                 .OrderByDescending(x => x.Products.Count)
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync() ?? new Supplier();
         }
 
         public class GetAllProductsWithSupplierTotalProductsCount
@@ -289,7 +289,7 @@ namespace ControllerAPI.Controllers
                     Discontinued = x.Discontinued,
                     Category = new
                     {
-                        CategoryId = x.Category.CategoryId,
+                        CategoryId = x.Category!.CategoryId,
                         CategoryName = x.Category.CategoryName,
                         Description = x.Category.Description,
                         Products = new List<Product>(),
@@ -321,8 +321,8 @@ namespace ControllerAPI.Controllers
                     UnitPrice = x.UnitPrice,
                     QuantityPerUnit = x.QuantityPerUnit,
                     Discontinued = x.Discontinued,
-                    CategoryName = x.Category.CategoryName,
-                    SupplierName = x.Supplier.CompanyName
+                    CategoryName = x.Category!.CategoryName,
+                    SupplierName = x.Supplier!.CompanyName
                 })
                 .ToListAsync();
         }
@@ -331,14 +331,24 @@ namespace ControllerAPI.Controllers
         public async Task<ActionResult<IEnumerable<Product>>> GetAllProductsThatHaveMoreThan5ProductsInCategoryBai28()
         {
             return await _context.Products
-                .Where(x => x.Category.Products.Count > 5)
+                .Where(x => x.Category!.Products.Count > 5)
                 .ToListAsync();
         }
 
         [HttpGet] // Bai 29
-        public async Task<ActionResult<int>> GetSumOfProductsUnitPriceOfSpecificCategory([Required] int CategoryId)
+        public async Task<ActionResult<decimal>> GetSumOfProductsUnitPriceOfSpecificCategoryBai29([Required] int CategoryId)
         {
-            return 0;
+            return await _context.Products
+                .Where(x => x.CategoryId == CategoryId)
+                .SumAsync(x => x.UnitPrice);
+        }
+
+        [HttpGet] // Bai 30
+        public async Task<ActionResult<Supplier>> GetSupplierThatLowestAverageOfProductsUnitPriceBai30()
+        {
+            return await _context.Suppliers
+                .OrderBy(x => x.Products.Average(y => y.UnitPrice))
+                .FirstOrDefaultAsync() ?? new Supplier();
         }
     }
 }
