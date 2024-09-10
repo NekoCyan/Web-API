@@ -3,8 +3,6 @@ using ControllerAPI_1721030861.Database;
 using ControllerAPI_1721030861.Database.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Runtime.InteropServices;
 
 namespace ControllerAPI_1721030861.Controllers
 {
