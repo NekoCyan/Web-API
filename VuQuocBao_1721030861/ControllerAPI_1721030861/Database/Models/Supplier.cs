@@ -10,4 +10,11 @@
 
         public virtual ICollection<Product> Products { get; set; } = new List<Product>();
     }
+
+    public class SupplierDTO
+    {
+        public string? CompanyName { get; set; }
+
+        public string? Phone { get; set; }
+    }
 }

@@ -1,4 +1,5 @@
-﻿using ControllerAPI_1721030861.Database;
+﻿using AutoMapper;
+using ControllerAPI_1721030861.Database;
 using ControllerAPI_1721030861.Database.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,10 +14,12 @@ namespace ControllerAPI_1721030861.Controllers
     public class EFCoreDemoController : ControllerBase
     {
         private readonly EFCoreDemoContext _context;
+        private readonly IMapper _mapper;
 
-        public EFCoreDemoController(EFCoreDemoContext context)
+        public EFCoreDemoController(EFCoreDemoContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         [HttpGet] // Bai 1

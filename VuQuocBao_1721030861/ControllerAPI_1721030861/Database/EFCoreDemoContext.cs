@@ -63,5 +63,23 @@ namespace ControllerAPI_1721030861.Database
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+        public bool IsProductExists(int? id)
+        {
+            if (id is null) return false;
+            return Products.Any(e => e.ProductId == id);
+        }
+
+        public bool IsCategoryExists(int? id)
+        {
+            if (id is null) return false;
+            return Categories.Any(e => e.CategoryId == id);
+        }
+
+        public bool IsSupplierExists(int? id)
+        {
+            if (id is null) return false;
+            return Suppliers.Any(e => e.SupplierId == id);
+        }
     }
 }

@@ -10,6 +10,9 @@ namespace ControllerAPI_1721030861.Services
             //CreateMap<ContentType, M_SelectDropDown>()
             //    .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id.ToString()))
             //    .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Title));
+            CreateMap<Product, ProductDTO>().ReverseMap();
+            CreateMap<Category, CategoryDTO>().ReverseMap();
+            CreateMap<Supplier, SupplierDTO>().ReverseMap();
         }
     }
 }
