@@ -21,7 +21,7 @@ namespace ControllerAPI_1721030861.Database
         public virtual DbSet<Supplier> Suppliers { get; set; }
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //    => optionsBuilder.UseSqlServer("Server=localhost;Database=EFcoreDemo;Trusted_Connection=True;Trust Server Certificate=True;User Id=sa;Password=123456");
+        //    => optionsBuilder.UseSqlServer();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

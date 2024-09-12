@@ -1,0 +1,2 @@
+Scaffold-DbContext "Data Source=localhost; Initial Catalog=EFcoreDemo; Persist Security Info=True; User ID=sa; Password=123456; Trust Server Certificate=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Database/Models -ContextDir Database
+Scaffold-DbContext "Data Source=localhost; Initial Catalog=EcommerceAddress; Persist Security Info=True; User ID=sa; Password=123456; Trust Server Certificate=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Database/Models -ContextDir Database

@@ -8,11 +8,11 @@ namespace ControllerAPI_1721030861.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class B1_APIController : ControllerBase
+    public class Bai1_APIController : ControllerBase
     {
         private readonly EFCoreDemoContext _context;
         private readonly IMapper _mapper;
-        public B1_APIController(EFCoreDemoContext context, IMapper mapper)
+        public Bai1_APIController(EFCoreDemoContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;

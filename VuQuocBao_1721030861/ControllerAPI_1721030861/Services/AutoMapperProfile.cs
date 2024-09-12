@@ -7,12 +7,17 @@ namespace ControllerAPI_1721030861.Services
     {
         public AutoMapperProfile()
         {
-            //CreateMap<ContentType, M_SelectDropDown>()
-            //    .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id.ToString()))
-            //    .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Title));
+            // Bai 1.
             CreateMap<Product, ProductDTO>().ReverseMap();
             CreateMap<Category, CategoryDTO>().ReverseMap();
             CreateMap<Supplier, SupplierDTO>().ReverseMap();
+
+            // Bai 2.
+            CreateMap<Address, AddressDTO>().ReverseMap();
+            CreateMap<Country, CountryDTO>().ReverseMap();
+            CreateMap<Province, ProvinceDTO>().ReverseMap();
+            CreateMap<District, DistrictDTO>().ReverseMap();
+            CreateMap<Ward, WardDTO>().ReverseMap();
         }
     }
 }

@@ -1,6 +1,7 @@
 using ControllerAPI_1721030861.Database;
 using ControllerAPI_1721030861.Services;
 using Microsoft.EntityFrameworkCore;
+using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,8 +9,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-var getConnectionStr = builder.Configuration.GetConnectionString("MyConnectString");
-builder.Services.AddDbContext<EFCoreDemoContext>(opt => opt.UseSqlServer(getConnectionStr));
+builder.Services
+    .AddDbContext<EFCoreDemoContext>(opt =>
+        opt.UseSqlServer(builder.Configuration.GetConnectionString("EFcoreDemo"))
+    )
+    .AddDbContext<EcommerceAddressContext>(opt =>
+        opt.UseSqlServer(builder.Configuration.GetConnectionString("EcommerceAddress"))
+    );
+
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
