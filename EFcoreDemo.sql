@@ -1,5 +1,8 @@
 -- https://drive.google.com/file/d/17fWVQ_cKy8NTUSRgIy2hTlzQz2cWjZmg/view
 
+USE [EFcoreDemo]
+GO
+
 -- drop table PRODUCTS;
 -- drop table SUPPLIERS;
 -- drop table CATEGORIES;
@@ -28,8 +31,6 @@ CREATE TABLE PRODUCTS (
 	constraint FK_PRODUCTS_CATEGORIES foreign key (CategoryID) references CATEGORIES(CategoryID)
 )
 
-USE [EFcoreDemo]
-GO
 SET IDENTITY_INSERT [dbo].[Categories] ON 
 
 INSERT [dbo].[Categories] ([CategoryID], [CategoryName], [Description]) VALUES (1, N'Beverages', N'Soft drinks, coffees, teas, beers, and ales')
