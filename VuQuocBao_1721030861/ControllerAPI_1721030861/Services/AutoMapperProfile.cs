@@ -1,5 +1,6 @@
 ﻿using ControllerAPI_1721030861.Database.Models;
 using AutoMapper;
+using ControllerAPI_1721030861.Database.Models.Bai2;
 
 namespace ControllerAPI_1721030861.Services
 {

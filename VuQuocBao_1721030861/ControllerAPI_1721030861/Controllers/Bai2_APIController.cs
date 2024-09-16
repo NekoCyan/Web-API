@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using ControllerAPI_1721030861.Database;
-using ControllerAPI_1721030861.Database.Models;
+using ControllerAPI_1721030861.Database.Models.Bai2;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

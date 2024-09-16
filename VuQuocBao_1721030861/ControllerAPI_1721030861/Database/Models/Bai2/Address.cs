@@ -1,4 +1,4 @@
-﻿namespace ControllerAPI_1721030861.Database.Models;
+﻿namespace ControllerAPI_1721030861.Database.Models.Bai2;
 
 public partial class Address
 {
