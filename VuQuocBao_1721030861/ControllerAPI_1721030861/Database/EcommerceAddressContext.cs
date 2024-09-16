@@ -210,4 +210,34 @@ public partial class EcommerceAddressContext : DbContext
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+    public bool IsAddressExists(int? id)
+    {
+        if (id is null) return false;
+        return Addresses.Any(e => e.AddressId == id);
+    }
+
+    public bool IsCountryExists(int? id)
+    {
+        if (id is null) return false;
+        return Countries.Any(e => e.CountryId == id);
+    }
+
+    public bool IsDistrictExists(int? id)
+    {
+        if (id is null) return false;
+        return Districts.Any(e => e.DistrictId == id);
+    }
+
+    public bool IsProvinceExists(int? id)
+    {
+        if (id is null) return false;
+        return Provinces.Any(e => e.ProvinceId == id);
+    }
+
+    public bool IsWardExists(int? id)
+    {
+        if (id is null) return false;
+        return Wards.Any(e => e.WardId == id);
+    }
 }

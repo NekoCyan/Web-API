@@ -25,8 +25,6 @@ public partial class Ward
 
 public partial class WardDTO
 {
-    public int WardId { get; set; }
-
     public string WardName { get; set; } = null!;
 
     public string WardCode { get; set; } = null!;

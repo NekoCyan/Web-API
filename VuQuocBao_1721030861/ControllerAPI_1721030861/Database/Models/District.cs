@@ -25,8 +25,6 @@ public partial class District
 
 public partial class DistrictDTO
 {
-    public int DistrictId { get; set; }
-
     public string DistrictName { get; set; } = null!;
 
     public string DistrictCode { get; set; } = null!;

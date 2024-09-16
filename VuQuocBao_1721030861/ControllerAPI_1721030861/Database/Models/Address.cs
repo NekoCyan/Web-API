@@ -35,8 +35,6 @@ public partial class Address
 
 public partial class AddressDTO
 {
-    public int AddressId { get; set; }
-
     public string AddressText { get; set; } = null!;
 
     public int CountryId { get; set; }

@@ -27,8 +27,6 @@ public partial class Province
 
 public partial class ProvinceDTO
 {
-    public int ProvinceId { get; set; }
-
     public string ProvinceName { get; set; } = null!;
 
     public string ProvinceCode { get; set; } = null!;
