@@ -38,3 +38,24 @@ public partial class Account
 
     public virtual AccountType? AccountNavigation { get; set; }
 }
+
+public partial class AccountDTO
+{
+    public string UserName { get; set; } = null!;
+
+    public string FullName { get; set; } = null!;
+
+    public string Email { get; set; } = null!;
+
+    public string AccountType { get; set; } = null!;
+
+    public string? Phone { get; set; }
+
+    public DateTime? Birthday { get; set; }
+
+    public int? AddressId { get; set; }
+
+    public int? ImageId { get; set; }
+
+    public string? Notes { get; set; }
+}

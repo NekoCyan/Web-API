@@ -15,6 +15,9 @@ builder.Services
     )
     .AddDbContext<EcommerceAddressContext>(opt =>
         opt.UseSqlServer(builder.Configuration.GetConnectionString("EcommerceAddress"))
+    )
+    .AddDbContext<CmsContext>(opt =>
+        opt.UseSqlServer(builder.Configuration.GetConnectionString("CMS"))
     );
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);

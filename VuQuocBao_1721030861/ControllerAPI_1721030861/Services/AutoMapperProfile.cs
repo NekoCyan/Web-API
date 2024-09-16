@@ -28,6 +28,7 @@ namespace ControllerAPI_1721030861.Services
             CreateMap<Content, ContentDTO>().ReverseMap();
             CreateMap<Image, ImageDTO>().ReverseMap();
             CreateMap<Portal, PortalDTO>().ReverseMap();
+            CreateMap<Account, AccountDTO>().ReverseMap();
         }
     }
 }
