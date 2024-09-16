@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace ControllerAPI_1721030861.Database.Models.Bai3;
+﻿namespace ControllerAPI_1721030861.Database.Models.Bai3;
 
 public partial class ContentType
 {

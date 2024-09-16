@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace ControllerAPI_1721030861.Database.Models.Bai3;
+﻿namespace ControllerAPI_1721030861.Database.Models.Bai3;
 
 public partial class Contact
 {
@@ -38,6 +35,29 @@ public partial class Contact
     public int? UpdatedBy { get; set; }
 
     public DateTime? UpdatedAt { get; set; }
+
+    public string? Notes { get; set; }
+}
+
+public partial class ContactDTO
+{
+    public int Id { get; set; }
+
+    public string FullName { get; set; } = null!;
+
+    public string Phone { get; set; } = null!;
+
+    public string Email { get; set; } = null!;
+
+    public string Title { get; set; } = null!;
+
+    public string Message { get; set; } = null!;
+
+    public string? Respponse { get; set; }
+
+    public int? AccountId { get; set; }
+
+    public int? AdviseId { get; set; }
 
     public string? Notes { get; set; }
 }
