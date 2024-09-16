@@ -123,6 +123,7 @@ namespace ControllerAPI_1721030861.Controllers
                 .Where(Product => Product.ProductName.Contains(ProductName))
                 .Select(Product => _mapper.Map<ProductDTO>(Product))
                 .ToListAsync();
+
             return Products;
         }
     }
