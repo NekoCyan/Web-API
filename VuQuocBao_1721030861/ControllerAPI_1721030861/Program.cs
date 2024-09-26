@@ -5,7 +5,10 @@ using static ControllerAPI_1721030861.Utils.WebBuilderUtils;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.DbContextRegister<GeneralCatalogContext>("GeneralCatalog");
+builder
+    .DbContextRegister<GeneralCatalogContext>("GeneralCatalog")
+    .DbContextRegister<APITeachingContext>("APITeaching");
+
 builder.AutoScoped();
 
 builder.Services.AddControllers();
