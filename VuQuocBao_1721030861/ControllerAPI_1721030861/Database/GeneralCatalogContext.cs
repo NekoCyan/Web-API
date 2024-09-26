@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using ControllerAPI_1721030861.Database.Models.Bai2;
+﻿using ControllerAPI_1721030861.Database.Models.Bai2;
 using Microsoft.EntityFrameworkCore;
 
 namespace ControllerAPI_1721030861.Database;
