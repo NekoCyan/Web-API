@@ -2,34 +2,50 @@
 
 public partial class District
 {
-    public int DistrictId { get; set; }
+    public int Id { get; set; }
 
-    public string DistrictName { get; set; } = null!;
+    public string Name { get; set; } = null!;
 
-    public string DistrictCode { get; set; } = null!;
+    public string? NameSlug { get; set; }
+
+    public string? DistrictCode { get; set; }
 
     public int ProvinceId { get; set; }
 
-    public bool Status { get; set; }
+    public DateTime CreatedAt { get; set; }
 
-    public string CreatedAt { get; set; } = null!;
+    public int CreatedBy { get; set; }
 
-    public string CreatedBy { get; set; } = null!;
+    public DateTime? UpdatedAt { get; set; }
 
-    public string UpdatedAt { get; set; } = null!;
+    public int UpdatedBy { get; set; }
 
-    public string UpdatedBy { get; set; } = null!;
+    public int? Status { get; set; }
 
-    public virtual ICollection<Address> Addresses { get; set; } = new List<Address>();
+    public DateTime Timer { get; set; }
+
+    public virtual Province Province { get; set; } = null!;
+
+    public virtual ICollection<Ward> Wards { get; set; } = new List<Ward>();
 }
 
 public partial class DistrictDTO
 {
-    public string DistrictName { get; set; } = null!;
+    public int Id { get; set; }
 
-    public string DistrictCode { get; set; } = null!;
+    public string Name { get; set; } = null!;
+
+    public string? NameSlug { get; set; }
+
+    public string? DistrictCode { get; set; }
 
     public int ProvinceId { get; set; }
 
-    public bool Status { get; set; }
+    public int CreatedBy { get; set; }
+
+    public int UpdatedBy { get; set; }
+
+    public int? Status { get; set; }
+
+    public DateTime Timer { get; set; }
 }

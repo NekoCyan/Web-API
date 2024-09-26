@@ -1,24 +1,13 @@
 using ControllerAPI_1721030861.Database;
 using ControllerAPI_1721030861.Services;
-using Microsoft.EntityFrameworkCore;
-using System.Configuration;
+using static ControllerAPI_1721030861.Utils.WebBuilderUtils;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.DbContextRegister<GeneralCatalogContext>("GeneralCatalog");
 
 builder.Services.AddControllers();
-
-builder.Services
-    .AddDbContext<EFCoreDemoContext>(opt =>
-        opt.UseSqlServer(builder.Configuration.GetConnectionString("EFcoreDemo"))
-    )
-    .AddDbContext<EcommerceAddressContext>(opt =>
-        opt.UseSqlServer(builder.Configuration.GetConnectionString("EcommerceAddress"))
-    )
-    .AddDbContext<CmsContext>(opt =>
-        opt.UseSqlServer(builder.Configuration.GetConnectionString("CMS"))
-    );
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
 

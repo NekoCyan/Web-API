@@ -2,34 +2,48 @@
 
 public partial class Ward
 {
-    public int WardId { get; set; }
+    public int Id { get; set; }
 
-    public string WardName { get; set; } = null!;
+    public string Name { get; set; } = null!;
 
-    public string WardCode { get; set; } = null!;
+    public string? NameSlug { get; set; }
+
+    public string? WardCode { get; set; }
 
     public int DistrictId { get; set; }
 
-    public bool Status { get; set; }
+    public DateTime CreatedAt { get; set; }
 
-    public string CreatedAt { get; set; } = null!;
+    public int CreatedBy { get; set; }
 
-    public string CreatedBy { get; set; } = null!;
+    public DateTime? UpdatedAt { get; set; }
 
-    public string UpdatedAt { get; set; } = null!;
+    public int UpdatedBy { get; set; }
 
-    public string UpdatedBy { get; set; } = null!;
+    public int? Status { get; set; }
 
-    public virtual ICollection<Address> Addresses { get; set; } = new List<Address>();
+    public DateTime Timer { get; set; }
+
+    public virtual District District { get; set; } = null!;
 }
 
 public partial class WardDTO
 {
-    public string WardName { get; set; } = null!;
+    public int Id { get; set; }
 
-    public string WardCode { get; set; } = null!;
+    public string Name { get; set; } = null!;
+
+    public string? NameSlug { get; set; }
+
+    public string? WardCode { get; set; }
 
     public int DistrictId { get; set; }
 
-    public bool Status { get; set; }
+    public int CreatedBy { get; set; }
+
+    public int UpdatedBy { get; set; }
+
+    public int? Status { get; set; }
+
+    public DateTime Timer { get; set; }
 }

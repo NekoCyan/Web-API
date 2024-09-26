@@ -2,34 +2,48 @@
 
 public partial class Country
 {
-    public int CountryId { get; set; }
+    public int Id { get; set; }
 
-    public string CountryName { get; set; } = null!;
+    public string Name { get; set; } = null!;
 
-    public string CountryCode { get; set; } = null!;
+    public string? NameSlug { get; set; }
 
-    public int ProvinceId { get; set; }
+    public string? CountryCode { get; set; }
 
-    public bool Status { get; set; }
+    public int? Status { get; set; }
 
-    public string CreatedAt { get; set; } = null!;
+    public DateTime? CreatedAt { get; set; }
 
-    public string CreatedBy { get; set; } = null!;
+    public int? CreatedBy { get; set; }
 
-    public string UpdatedAt { get; set; } = null!;
+    public DateTime? UpdatedAt { get; set; }
 
-    public string UpdatedBy { get; set; } = null!;
+    public int? UpdatedBy { get; set; }
 
-    public virtual ICollection<Address> Addresses { get; set; } = new List<Address>();
+    public string? Remark { get; set; }
+
+    public DateTime Timer { get; set; }
+
+    public virtual ICollection<Province> Provinces { get; set; } = new List<Province>();
 }
 
 public partial class CountryDTO
 {
-    public string CountryName { get; set; } = null!;
+    public int Id { get; set; }
 
-    public string CountryCode { get; set; } = null!;
+    public string Name { get; set; } = null!;
 
-    public int ProvinceId { get; set; }
+    public string? NameSlug { get; set; }
 
-    public bool Status { get; set; }
+    public string? CountryCode { get; set; }
+
+    public int? Status { get; set; }
+
+    public int? CreatedBy { get; set; }
+
+    public int? UpdatedBy { get; set; }
+
+    public string? Remark { get; set; }
+
+    public DateTime Timer { get; set; }
 }
