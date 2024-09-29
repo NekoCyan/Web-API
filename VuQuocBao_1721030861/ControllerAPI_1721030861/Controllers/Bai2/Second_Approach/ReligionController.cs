@@ -13,9 +13,9 @@ namespace ControllerAPI_1721030861.Controllers.Bai2.Second_Approach
         private readonly IGenericRepository<Religion> _religionRepository;
         private readonly IMapper _mapper;
 
-        public ReligionController(IGenericRepository<Religion> schoolService, IMapper mapper)
+        public ReligionController(IGenericRepository<Religion> religionService, IMapper mapper)
         {
-            _religionRepository = schoolService;
+            _religionRepository = religionService;
             _mapper = mapper;
         }
 

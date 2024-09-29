@@ -13,9 +13,9 @@ namespace ControllerAPI_1721030861.Controllers.Bai2.Second_Approach
         private readonly IGenericRepository<Folk> _folkRepository;
         private readonly IMapper _mapper;
 
-        public FolkController(IGenericRepository<Folk> schoolService, IMapper mapper)
+        public FolkController(IGenericRepository<Folk> folkService, IMapper mapper)
         {
-            _folkRepository = schoolService;
+            _folkRepository = folkService;
             _mapper = mapper;
         }
 
