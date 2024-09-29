@@ -2,7 +2,7 @@
 
 public partial class OrderDetail
 {
-    public int? Id { get; set; }
+    public int Id { get; set; }
 
     public int ProductId { get; set; }
 
@@ -23,7 +23,7 @@ public partial class OrderDetail
 
 public partial class OrderDetailDTO
 {
-    public int? Id { get; set; }
+    public int Id { get; set; }
 
     public int ProductId { get; set; }
 
