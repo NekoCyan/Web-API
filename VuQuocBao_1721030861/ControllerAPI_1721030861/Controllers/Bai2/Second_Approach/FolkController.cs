@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace ControllerAPI_1721030861.Controllers.Bai2.Second_Approach
 {
-    [Route("api/[controller]/[action]")]
+    [Route("bai2/[controller]/[action]")]
     [ApiController]
     public class FolkController : ControllerBase
     {

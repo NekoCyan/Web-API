@@ -3,7 +3,7 @@ using ControllerAPI_1721030861.Repositories.Bai1.First_Approach;
 using ControllerAPI_1721030861.Repositories.Bai1.Simple;
 //using ControllerAPI_1721030861.Database.Models.Bai2;
 //using ControllerAPI_1721030861.Repositories.Bai2.Simple;
-//using ControllerAPI_1721030861.Repositories.Bai2.First_Approach;
+//using ControllerAPI_1721030861.Repositories.Bai2.First_Approach; // Couldn't shared (Services conflict)
 using ControllerAPI_1721030861.Repositories.Bai2.Second_Approach; // Shared Generic Repository
 using Microsoft.EntityFrameworkCore;
 
