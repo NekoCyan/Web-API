@@ -1,4 +1,0 @@
-1. Open MSSQL Server Management Studio then login.
-2. Right click to Databases -> Restore Database.
-3. In General, select Device and browse bak file location.
-4. After see fully informations, head to click OK to restore.
