@@ -1,15 +1,9 @@
-using ControllerAPI_1721030861.Database;
-using ControllerAPI_1721030861.Services;
 using static ControllerAPI_1721030861.Utils.WebBuilderUtils;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Startup();
-
-builder.Services.AddControllers();
-
-builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

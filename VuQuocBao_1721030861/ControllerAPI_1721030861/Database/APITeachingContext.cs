@@ -1,4 +1,4 @@
-﻿using ControllerAPI_1721030861.Database.Models.Bai1;
+﻿using ControllerAPI_1721030861.Database.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace ControllerAPI_1721030861.Database;
