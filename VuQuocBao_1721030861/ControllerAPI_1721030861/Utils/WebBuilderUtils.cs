@@ -6,11 +6,45 @@ using ControllerAPI_1721030861.Repositories.Bai1.First_Approach;
 //using ControllerAPI_1721030861.Repositories.Bai2.First_Approach; // Couldn't shared (Services conflict)
 using ControllerAPI_1721030861.Repositories.Bai2.Second_Approach; // Shared Generic Repository
 using Microsoft.EntityFrameworkCore;
+using ControllerAPI_1721030861.Database;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace ControllerAPI_1721030861.Utils
 {
     public static class WebBuilderUtils
     {
+        public static WebApplicationBuilder Startup(this WebApplicationBuilder builder)
+        {
+            builder
+                .DbContextRegister<GeneralCatalogContext>("GeneralCatalog")
+                .DbContextRegister<APITeachingContext>("APITeaching");
+
+            builder.AutoScoped();
+
+            var secretKeyText = builder.Configuration["Jwt:SecretKey"];
+            var secretKeyBytes = Encoding.UTF8.GetBytes(secretKeyText!);
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                ValidateLifetime = true,
+                ValidateAudience = true,
+                ValidAudience = builder.Configuration["Jwt:Audience"],
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(secretKeyBytes),
+                ClockSkew = TimeSpan.Zero
+            });
+
+            return builder;
+        }
+
         public static WebApplicationBuilder DbContextRegister<TContext>(this WebApplicationBuilder builder, string DatabaseName) where TContext : DbContext
         {
             builder.Services.AddDbContext<TContext>(opt =>

@@ -5,11 +5,7 @@ using static ControllerAPI_1721030861.Utils.WebBuilderUtils;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder
-    .DbContextRegister<GeneralCatalogContext>("GeneralCatalog")
-    .DbContextRegister<APITeachingContext>("APITeaching");
-
-builder.AutoScoped();
+builder.Startup();
 
 builder.Services.AddControllers();
 
@@ -35,6 +31,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
