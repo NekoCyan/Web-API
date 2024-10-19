@@ -1,8 +1,8 @@
-using static ControllerAPI_1721030861.Utils.WebBuilderUtils;
+using ControllerAPI_1721030861.Startup;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Builder startup container.
 builder.Startup();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -25,12 +25,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-app.UseHsts();
-
-app.UseAuthentication();
-app.UseAuthorization();
-
-app.MapControllers();
+// App startup container.
+app.Startup();
 
 app.Run();

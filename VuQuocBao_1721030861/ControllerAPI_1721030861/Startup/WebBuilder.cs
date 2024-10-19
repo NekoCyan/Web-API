@@ -4,25 +4,64 @@ using ControllerAPI_1721030861.Repositories.First_Approach;
 using ControllerAPI_1721030861.Repositories.Second_Approach;
 using ControllerAPI_1721030861.Repositories.Simple;
 using ControllerAPI_1721030861.Services;
+using ControllerAPI_1721030861.Utils;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System.Threading.RateLimiting;
 using static ControllerAPI_1721030861.Utils.Crypto;
 
-namespace ControllerAPI_1721030861.Utils
+namespace ControllerAPI_1721030861.Startup
 {
-    public static class WebBuilderUtils
+    public static class WebBuilder
     {
         public static WebApplicationBuilder Startup(this WebApplicationBuilder builder)
         {
+            // Sql server.
             builder
                 .DbContextRegister<APITeachingContext>("APITeaching");
+
+            // Scoped.
             builder.AutoScoped();
+
+            // Controllers.
             builder.Services.AddControllers();
+
+            // AutoMapper.
             builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
+
+            // Auth.
             builder.AutoAuthentication();
+
+            // CORS.
             builder.AutoCORS();
+
+            // Rate limit.
+            builder.Services.AddMemoryCache();
+            builder.Services.AddRateLimiter(options =>
+            {
+                options.RejectionStatusCode = 429;
+                options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(HttpContext => RateLimitPartition.GetFixedWindowLimiter(
+                    HttpContext.Request.Headers.Host.ToString(),
+                    partition => new FixedWindowRateLimiterOptions
+                    {
+                        AutoReplenishment = true,
+                        PermitLimit = 10, // Limit 10 requests.
+                        QueueLimit = 0, // No queue.
+                        Window = TimeSpan.FromMinutes(1) // Per minute.
+                    }
+                ));
+                options.AddFixedWindowLimiter("Fixed", opt =>
+                {
+                    opt.PermitLimit = 5; // Limit 5 requests.
+                    opt.Window = TimeSpan.FromMinutes(1); // Per minute.
+                    opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+                    opt.QueueLimit = 2;
+                });
+            });
 
             return builder;
         }
