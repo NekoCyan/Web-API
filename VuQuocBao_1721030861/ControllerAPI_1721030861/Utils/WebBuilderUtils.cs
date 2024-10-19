@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using static ControllerAPI_1721030861.Utils.Crypto;
 
 namespace ControllerAPI_1721030861.Utils
 {
@@ -28,8 +29,11 @@ namespace ControllerAPI_1721030861.Utils
 
         public static WebApplicationBuilder DbContextRegister<TContext>(this WebApplicationBuilder builder, string DatabaseName) where TContext : DbContext
         {
+            var secretKeyText = builder.Configuration["JwtSettings:SecretKey"] ??
+                throw new ArgumentNullException("JwtSettings:SecretKey is not found in appsettings.json");
+
             builder.Services.AddDbContext<TContext>(opt =>
-                opt.UseSqlServer(builder.Configuration.GetConnectionString(DatabaseName))
+                opt.UseSqlServer(Decrypt(builder.Configuration.GetConnectionString(DatabaseName)!, secretKeyText!))
             );
 
             return builder;
@@ -57,7 +61,8 @@ namespace ControllerAPI_1721030861.Utils
 
         public static WebApplicationBuilder AutoAuthentication(this WebApplicationBuilder builder)
         {
-            var secretKeyText = builder.Configuration["JwtSettings:SecretKey"];
+            var secretKeyText = builder.Configuration["JwtSettings:SecretKey"] ??
+                throw new ArgumentNullException("JwtSettings:SecretKey is not found in appsettings.json");
             var secretKeyBytes = Encoding.UTF8.GetBytes(secretKeyText!);
             builder.Services.AddAuthentication(options =>
             {
@@ -88,6 +93,16 @@ namespace ControllerAPI_1721030861.Utils
                     builder.AllowAnyOrigin()
                         .AllowAnyMethod()
                         .AllowAnyHeader();
+                });
+
+                options.AddPolicy("Dev", builder =>
+                {
+                    builder.WithOrigins(
+                        "http://localhost:5047",
+                        "http://localhost:42636",
+                        "https://localhost:7149")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
                 });
             });
 

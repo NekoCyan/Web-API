@@ -25,7 +25,7 @@ namespace ControllerAPI_1721030861.Controllers.Simple
             _authentication = authentication;
         }
 
-        [HttpPost]
+        [HttpPost, EnableCors("AllowAll")]
         public ActionResult<APIResponse<string>> Login([FromBody] LoginModel model)
         {
             if (!ModelState.IsValid) return Unauthorized(new APIResponse<string>(-1, "Invalid model state"));
@@ -38,8 +38,8 @@ namespace ControllerAPI_1721030861.Controllers.Simple
             return Unauthorized(new APIResponse<string>(-1, "Invalid username or password"));
         }
 
-        [HttpGet]
-        [EnableCors("AllowAll")]
+        [HttpGet, EnableCors("AllowAll")]
+        //[Authorize] // Disable this to test token
         public async Task<ActionResult<string>> GetLoginTokenById(int id)
         {
             var account = await _accountService.GetAsync(id);
@@ -49,15 +49,15 @@ namespace ControllerAPI_1721030861.Controllers.Simple
         }
 
         [HttpGet]
-        [EnableCors("AllowAll")]
         public async Task<ActionResult<string>> RefreshToken(string CurrentToken)
         {
+            if (!_authentication.IsTokenValid(CurrentToken)) return Unauthorized(new APIResponse<string>(-1, "Token is Invalid"));
+
             return await _authentication.RefreshAccessToken(CurrentToken);
         }
 
         [HttpGet]
         [Authorize]
-        [EnableCors("AllowAll")]
         public async Task<ActionResult<AccountDTO>> Get(int id)
         {
             return _mapper.Map<AccountDTO>(await _accountService.GetAsync(id));
@@ -115,8 +115,10 @@ namespace ControllerAPI_1721030861.Controllers.Simple
 
         [HttpPut]
         [Authorize]
-        public async Task<IActionResult> Update(AccountDTO model)
+        public async Task<IActionResult> Update([FromBody] AccountDTO model)
         {
+            if (!ModelState.IsValid) return Unauthorized(new APIResponse<string>(-1, "Invalid model state"));
+
             if (_accountService.CheckExists(model.Id))
             {
                 var entity = new Account();
@@ -128,13 +130,16 @@ namespace ControllerAPI_1721030861.Controllers.Simple
         }
 
         [HttpPost]
-        public async Task<ActionResult<AccountDTO>> Create(AccountDTO model)
+        public async Task<ActionResult<AccountDTO>> Create([FromBody] AccountDTO model)
         {
+            if (!ModelState.IsValid) return Unauthorized(new APIResponse<string>(-1, "Invalid model state"));
+
             // Get Max Id in table of Database --> set for model + 1
             model.Id = await _accountService.MaxIdAsync(model.Id) + 1;
 
             //Mapp data model --> newModel
             var newModel = new Account();
+            newModel.Password = "123456"; // Just for example.
             _mapper.Map(model, newModel);
             if (await _accountService.CreateAsync(newModel) != null)
                 return Ok(model);

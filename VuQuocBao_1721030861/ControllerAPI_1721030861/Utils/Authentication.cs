@@ -38,7 +38,7 @@ namespace ControllerAPI_1721030861.Utils
                 issuer: jwtSettings["Issuer"],
                 audience: jwtSettings["Audience"],
                 claims: authoClaims,
-                expires: DateTime.UtcNow.AddMinutes(60),
+                expires: DateTime.UtcNow.AddSeconds(10),
                 signingCredentials: credentials
             );
 
@@ -50,19 +50,48 @@ namespace ControllerAPI_1721030861.Utils
             if (!IsTokenValid(token)) return "";
             if (!IsTokenExpired(token)) return token;
 
-            var JwtAccount = new JwtSecurityToken(token);
-            var JwtAccountId = JwtAccount.Claims.FirstOrDefault(x => x.Type == "Id")?.Value;
-            var account = await _accountService.GetAsync(int.Parse(JwtAccountId));
+            var tokenHandler = new JwtSecurityTokenHandler();
+            JwtSecurityToken jwtAccount;
+
+            try
+            {
+                jwtAccount = tokenHandler.ReadJwtToken(token);
+            }
+            catch (Exception)
+            {
+                return ""; // Invalid token format
+            }
+
+            var jwtAccountId = jwtAccount.Claims.FirstOrDefault(x => x.Type == "Id")?.Value;
+            if (string.IsNullOrEmpty(jwtAccountId)) return ""; // Handle case where Id is not present
+            var account = await _accountService.GetAsync(int.Parse(jwtAccountId));
+            if (account == null) return ""; // Handle case where account is not found
 
             return GenerateAccessToken(account);
         }
 
-        private bool IsTokenValid(string token)
+        public bool IsTokenValid(string token)
         {
-            JwtSecurityToken SecurityToken;
+            var jwtSettings = _configuration.GetSection("JwtSettings");
+            var secretKeyBytes = Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]!);
+            var securityKey = new SymmetricSecurityKey(secretKeyBytes);
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var validationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true, // This will check for token expiration
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = jwtSettings["Issuer"],
+                ValidAudience = jwtSettings["Audience"],
+                IssuerSigningKey = securityKey
+            };
+
             try
             {
-                SecurityToken = new JwtSecurityToken(token);
+                // Validate the token
+                tokenHandler.ValidateToken(token, validationParameters, out SecurityToken validatedToken);
                 return true;
             }
             catch
@@ -71,13 +100,14 @@ namespace ControllerAPI_1721030861.Utils
             }
         }
 
-        private bool IsTokenExpired(string token)
+        public bool IsTokenExpired(string token)
         {
-            if (!IsTokenValid(token)) return false;
+            var jwtToken = new JwtSecurityTokenHandler().ReadToken(token) as JwtSecurityToken;
 
-            JwtSecurityToken SecurityToken = new JwtSecurityToken(token);
+            if (jwtToken == null)
+                return true; // Invalid token
 
-            return SecurityToken.ValidTo < DateTime.UtcNow;
+            return jwtToken.ValidTo < DateTime.UtcNow;
         }
     }
 }

@@ -9,7 +9,7 @@ namespace ControllerAPI_1721030861.Utils
         {
             using (Aes aesAlg = Aes.Create())
             {
-                var keyBytes = Encoding.UTF8.GetBytes(key.PadRight(32)); // length key 32 byte
+                var keyBytes = Encoding.UTF8.GetBytes(key.PadRight(32)[..32]); // length key 32 byte
                 aesAlg.Key = keyBytes;
                 aesAlg.IV = new byte[16]; // (Initialization Vector)
                 ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
@@ -29,7 +29,7 @@ namespace ControllerAPI_1721030861.Utils
         {
             using (Aes aesAlg = Aes.Create())
             {
-                var keyBytes = Encoding.UTF8.GetBytes(key.PadRight(32));
+                var keyBytes = Encoding.UTF8.GetBytes(key.PadRight(32)[..32]);
                 aesAlg.Key = keyBytes;
                 aesAlg.IV = new byte[16];
 
