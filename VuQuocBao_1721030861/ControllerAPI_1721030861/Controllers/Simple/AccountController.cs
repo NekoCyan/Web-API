@@ -10,8 +10,8 @@ using System.Linq.Expressions;
 
 namespace ControllerAPI_1721030861.Controllers.Simple
 {
-    [Route("[controller]/[action]")]
-    [ApiController]
+    [Route("[controller]/[action]"), ApiController]
+    //[ValidateAntiForgeryToken]
     public class AccountController : ControllerBase
     {
         private readonly IAccountService _accountService;

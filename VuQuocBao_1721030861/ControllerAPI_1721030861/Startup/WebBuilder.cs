@@ -39,6 +39,21 @@ namespace ControllerAPI_1721030861.Startup
             // CORS.
             builder.AutoCORS();
 
+            #region CSRF protection
+            builder.Services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.MinimumSameSitePolicy = SameSiteMode.Strict;
+            });
+            builder.Services.AddControllersWithViews(options =>
+            {
+                options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+            });
+            builder.Services.AddAntiforgery(options =>
+            {
+                options.HeaderName = "X-CSRF-TOKEN";
+            });
+            #endregion
+
             // Rate limit.
             builder.Services.AddMemoryCache();
             builder.Services.AddRateLimiter(options =>
