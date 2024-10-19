@@ -1,6 +1,10 @@
 ﻿using AutoMapper;
 using ControllerAPI_1721030861.Database.Models;
+using ControllerAPI_1721030861.Models;
 using ControllerAPI_1721030861.Repositories.Simple;
+using ControllerAPI_1721030861.Utils;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq.Expressions;
 
@@ -12,26 +16,62 @@ namespace ControllerAPI_1721030861.Controllers.Simple
     {
         private readonly IAccountService _accountService;
         private readonly IMapper _mapper;
+        private readonly Authentication _authentication;
 
-        public AccountController(IAccountService accountService, IMapper mapper)
+        public AccountController(IAccountService accountService, IMapper mapper, Authentication authentication)
         {
             _accountService = accountService;
             _mapper = mapper;
+            _authentication = authentication;
+        }
+
+        [HttpPost]
+        public ActionResult<APIResponse<string>> Login([FromBody] LoginModel model)
+        {
+            if (!ModelState.IsValid) return Unauthorized(new APIResponse<string>(-1, "Invalid model state"));
+
+            if (model.userName == "adminadmin" && model.password == "Adminadmin123")
+            {
+                return Ok(new APIResponse<string>(1, "OK", "Nothing"));
+            }
+
+            return Unauthorized(new APIResponse<string>(-1, "Invalid username or password"));
         }
 
         [HttpGet]
+        [EnableCors("AllowAll")]
+        public async Task<ActionResult<string>> GetLoginTokenById(int id)
+        {
+            var account = await _accountService.GetAsync(id);
+            if (account is null) return NotFound();
+
+            return Ok(new APIResponse<string>(1, "OK", _authentication.GenerateAccessToken(account)));
+        }
+
+        [HttpGet]
+        [EnableCors("AllowAll")]
+        public async Task<ActionResult<string>> RefreshToken(string CurrentToken)
+        {
+            return await _authentication.RefreshAccessToken(CurrentToken);
+        }
+
+        [HttpGet]
+        [Authorize]
+        [EnableCors("AllowAll")]
         public async Task<ActionResult<AccountDTO>> Get(int id)
         {
             return _mapper.Map<AccountDTO>(await _accountService.GetAsync(id));
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<Account>> GetFull(int id)
         {
             return await _accountService.GetAsync(id, false);
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<AccountDTO>>> GetList()
         {
             var entityList = await _accountService.GetListAsync();
@@ -45,6 +85,7 @@ namespace ControllerAPI_1721030861.Controllers.Simple
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<AccountDTO>>> Search(string txtSearch)
         {
             Expression<Func<Account, bool>> filter = a => a.Status != -1 && a.UserName!.Contains(txtSearch);
@@ -59,6 +100,7 @@ namespace ControllerAPI_1721030861.Controllers.Simple
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<Account>>> SearchFull(string txtSearch)
         {
             Expression<Func<Account, bool>> filter;
@@ -72,6 +114,7 @@ namespace ControllerAPI_1721030861.Controllers.Simple
         }
 
         [HttpPut]
+        [Authorize]
         public async Task<IActionResult> Update(AccountDTO model)
         {
             if (_accountService.CheckExists(model.Id))
@@ -100,6 +143,7 @@ namespace ControllerAPI_1721030861.Controllers.Simple
         }
 
         [HttpDelete]
+        [Authorize]
         public ActionResult Delete(int id)
         {
             var result = _accountService.Delete(id);

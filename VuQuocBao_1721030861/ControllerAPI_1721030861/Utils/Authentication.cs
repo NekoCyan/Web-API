@@ -1,4 +1,5 @@
 ﻿using ControllerAPI_1721030861.Database.Models;
+using ControllerAPI_1721030861.Repositories.Simple;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -8,12 +9,15 @@ namespace ControllerAPI_1721030861.Utils
 {
     public class Authentication
     {
-        public readonly IConfiguration _configuration;
-        public Authentication(IConfiguration configuration)
+        private readonly IConfiguration _configuration;
+        private readonly IAccountService _accountService;
+        public Authentication(IConfiguration configuration, IAccountService accountService)
         {
             _configuration = configuration;
+            _accountService = accountService;
         }
-        private string GenerateAccessToken(Account account)
+
+        public string GenerateAccessToken(Account account)
         {
             var guid = Guid.NewGuid().ToString();
             var authoClaims = new List<Claim>
@@ -39,6 +43,41 @@ namespace ControllerAPI_1721030861.Utils
             );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        public async Task<string> RefreshAccessToken(string token)
+        {
+            if (!IsTokenValid(token)) return "";
+            if (!IsTokenExpired(token)) return token;
+
+            var JwtAccount = new JwtSecurityToken(token);
+            var JwtAccountId = JwtAccount.Claims.FirstOrDefault(x => x.Type == "Id")?.Value;
+            var account = await _accountService.GetAsync(int.Parse(JwtAccountId));
+
+            return GenerateAccessToken(account);
+        }
+
+        private bool IsTokenValid(string token)
+        {
+            JwtSecurityToken SecurityToken;
+            try
+            {
+                SecurityToken = new JwtSecurityToken(token);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private bool IsTokenExpired(string token)
+        {
+            if (!IsTokenValid(token)) return false;
+
+            JwtSecurityToken SecurityToken = new JwtSecurityToken(token);
+
+            return SecurityToken.ValidTo < DateTime.UtcNow;
         }
     }
 }

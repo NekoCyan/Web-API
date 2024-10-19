@@ -21,6 +21,7 @@ namespace ControllerAPI_1721030861.Utils
             builder.Services.AddControllers();
             builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
             builder.AutoAuthentication();
+            builder.AutoCORS();
 
             return builder;
         }
@@ -56,7 +57,7 @@ namespace ControllerAPI_1721030861.Utils
 
         public static WebApplicationBuilder AutoAuthentication(this WebApplicationBuilder builder)
         {
-            var secretKeyText = builder.Configuration["Jwt:SecretKey"];
+            var secretKeyText = builder.Configuration["JwtSettings:SecretKey"];
             var secretKeyBytes = Encoding.UTF8.GetBytes(secretKeyText!);
             builder.Services.AddAuthentication(options =>
             {
@@ -66,13 +67,28 @@ namespace ControllerAPI_1721030861.Utils
             }).AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters
             {
                 ValidateIssuer = true,
-                ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
                 ValidateLifetime = true,
                 ValidateAudience = true,
-                ValidAudience = builder.Configuration["Jwt:Audience"],
+                ValidAudience = builder.Configuration["JwtSettings:Audience"],
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = new SymmetricSecurityKey(secretKeyBytes),
                 ClockSkew = TimeSpan.Zero
+            });
+
+            return builder;
+        }
+
+        public static WebApplicationBuilder AutoCORS(this WebApplicationBuilder builder)
+        {
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", builder =>
+                {
+                    builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                });
             });
 
             return builder;
