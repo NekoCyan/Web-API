@@ -11,6 +11,7 @@ namespace ControllerAPI_1721030861.Startup
 
             app.UseMiddleware<AntiXssMiddleware>();
             app.UseMiddleware<Middleware>();
+            //app.UseMiddleware<APIResponseMiddleware>();
 
             app.UseAuthentication();
             app.UseAuthorization();

@@ -26,16 +26,16 @@ namespace ControllerAPI_1721030861.Controllers.Simple
         }
 
         [HttpPost, EnableCors("AllowAll")]
-        public ActionResult<APIResponse<string>> Login([FromBody] LoginModel model)
+        public ActionResult<string> Login([FromBody] LoginModel model)
         {
-            if (!ModelState.IsValid) return Unauthorized(new APIResponse<string>(-1, "Invalid model state"));
+            if (!ModelState.IsValid) return BadRequest();
 
             if (model.userName == "adminadmin" && model.password == "Adminadmin123")
             {
-                return Ok(new APIResponse<string>(1, "OK", "Nothing"));
+                return Ok("Nothing");
             }
 
-            return Unauthorized(new APIResponse<string>(-1, "Invalid username or password"));
+            return Unauthorized("Invalid username or password");
         }
 
         [HttpGet, EnableCors("AllowAll")]
@@ -45,13 +45,13 @@ namespace ControllerAPI_1721030861.Controllers.Simple
             var account = await _accountService.GetAsync(id);
             if (account is null) return NotFound();
 
-            return Ok(new APIResponse<string>(1, "OK", _authentication.GenerateAccessToken(account)));
+            return Ok(_authentication.GenerateAccessToken(account));
         }
 
         [HttpGet]
         public async Task<ActionResult<string>> RefreshToken(string CurrentToken)
         {
-            if (!_authentication.IsTokenValid(CurrentToken)) return Unauthorized(new APIResponse<string>(-1, "Token is Invalid"));
+            if (!_authentication.IsTokenValid(CurrentToken)) return Unauthorized("Token is Invalid");
 
             return await _authentication.RefreshAccessToken(CurrentToken);
         }
@@ -117,7 +117,7 @@ namespace ControllerAPI_1721030861.Controllers.Simple
         [Authorize]
         public async Task<IActionResult> Update([FromBody] AccountDTO model)
         {
-            if (!ModelState.IsValid) return Unauthorized(new APIResponse<string>(-1, "Invalid model state"));
+            if (!ModelState.IsValid) return BadRequest("Invalid model state");
 
             if (_accountService.CheckExists(model.Id))
             {
@@ -132,7 +132,7 @@ namespace ControllerAPI_1721030861.Controllers.Simple
         [HttpPost]
         public async Task<ActionResult<AccountDTO>> Create([FromBody] AccountDTO model)
         {
-            if (!ModelState.IsValid) return Unauthorized(new APIResponse<string>(-1, "Invalid model state"));
+            if (!ModelState.IsValid) return BadRequest("Invalid model state");
 
             // Get Max Id in table of Database --> set for model + 1
             model.Id = await _accountService.MaxIdAsync(model.Id) + 1;
@@ -154,7 +154,7 @@ namespace ControllerAPI_1721030861.Controllers.Simple
             var result = _accountService.Delete(id);
             if (result == 1)
             {
-                return Ok(new { success = true, message = "Record is deleted." });
+                return Ok("Record is deleted.");
             }
             return NotFound();
         }

@@ -1,5 +1,7 @@
-﻿using ControllerAPI_1721030861.Database;
+﻿using ControllerAPI_1721030861.Consume;
+using ControllerAPI_1721030861.Database;
 using ControllerAPI_1721030861.Database.Models;
+using ControllerAPI_1721030861.Middlewares;
 using ControllerAPI_1721030861.Repositories.First_Approach;
 using ControllerAPI_1721030861.Repositories.Second_Approach;
 using ControllerAPI_1721030861.Repositories.Simple;
@@ -27,8 +29,14 @@ namespace ControllerAPI_1721030861.Startup
             // Scoped.
             builder.AutoScoped();
 
+            // ConsumeAPI
+            builder.Services.AddHttpClient<IConsumeAPI, ConsumeAPI>();
+
             // Controllers.
-            builder.Services.AddControllers();
+            builder.Services.AddControllers(options =>
+            {
+                options.Filters.Add<MyActionFilter>(); // Add action filter globally.
+            });
 
             // AutoMapper.
             builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
