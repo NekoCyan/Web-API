@@ -25,7 +25,7 @@ namespace ControllerAPI_1721030861.Utils
                 new Claim("Id", user.Id.ToString()),
                 new Claim("UserName", user.UserName!),
                 new Claim(ClaimTypes.Name, user.UserName!),
-                new Claim(ClaimTypes.Role,"Nekowo"), // option role name
+                new Claim(ClaimTypes.Role, user.RoleId.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti, guid),
                 new Claim(JwtRegisteredClaimNames.Email, user.Email!)
             };

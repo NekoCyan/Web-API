@@ -37,3 +37,21 @@ public partial class UserApiDTO
     /// </summary>
     public int RoleId { get; set; }
 }
+
+public partial class UserApiDTOWithPasswrd
+{
+    public int Id { get; set; }
+
+    public string UserName { get; set; } = null!;
+
+    public string Password { get; set; } = null!;
+
+    public string? Email { get; set; }
+
+    public string? Phone { get; set; }
+
+    /// <summary>
+    /// 1: Admin; 2: Manager; 3: User
+    /// </summary>
+    public int RoleId { get; set; }
+}

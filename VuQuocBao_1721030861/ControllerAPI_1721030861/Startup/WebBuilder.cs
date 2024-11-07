@@ -39,7 +39,7 @@ namespace ControllerAPI_1721030861.Startup
             // Controllers.
             builder.Services.AddControllers(options =>
             {
-                options.Filters.Add<MyActionFilter>(); // Add action filter globally.
+                //options.Filters.Add<MyActionFilter>(); // Add action filter globally.
             });
 
             // Auth.
@@ -89,6 +89,13 @@ namespace ControllerAPI_1721030861.Startup
                     opt.Window = TimeSpan.FromMinutes(1); // Per minute.
                     opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
                     opt.QueueLimit = 2;
+                });
+                options.AddFixedWindowLimiter("Account", opt =>
+                {
+                    opt.PermitLimit = 3;
+                    opt.Window = TimeSpan.FromMinutes(1); // Per minute.
+                    opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+                    opt.QueueLimit = 0;
                 });
             });
 

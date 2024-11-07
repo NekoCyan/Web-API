@@ -6,8 +6,15 @@
         public string Message { get; set; }
         public T? Data { get; set; }
 
+        public APIResponse()
+        {
+            Code = 200;
+            Message = "Ok";
+        }
+
         public APIResponse(T _Data)
         {
+            Code = 200;
             Message = "Ok";
             Data = _Data;
         }
@@ -24,6 +31,7 @@
         }
         public APIResponse(string _Message, T _Data)
         {
+            Code = 200;
             Message = _Message;
             Data = _Data;
         }
@@ -43,11 +51,13 @@
 
         public APIResponse()
         {
+            Code = 200;
             Message = "Ok";
         }
 
         public APIResponse(dynamic _Data)
         {
+            Code = 200;
             Message = "Ok";
             Data = _Data;
         }
@@ -64,6 +74,7 @@
         }
         public APIResponse(string _Message, dynamic _Data)
         {
+            Code = 200;
             Message = _Message;
             Data = _Data;
         }

@@ -22,7 +22,7 @@ namespace ControllerAPI_1721030861.Startup
             // Middlewares.
             app.UseMiddleware<AntiXssMiddleware>();
             app.UseMiddleware<Middleware>();
-            //app.UseMiddleware<APIResponseMiddleware>();
+            app.UseMiddleware<JwtExpirationMiddleware>();
 
             app.UseAuthentication();
             app.UseAuthorization();

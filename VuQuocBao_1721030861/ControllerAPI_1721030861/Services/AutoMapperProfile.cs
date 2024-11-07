@@ -9,6 +9,7 @@ namespace ControllerAPI_1721030861.Services
         {
             CreateMap<CategoryApi, CategoryApiDTO>().ReverseMap();
             CreateMap<UserApi, UserApiDTO>().ReverseMap();
+            CreateMap<UserApi, UserApiDTOWithPasswrd>().ReverseMap();
             CreateMap<NewsApi, NewsApiDTO>().ReverseMap();
         }
     }

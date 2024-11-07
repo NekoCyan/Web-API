@@ -6,10 +6,10 @@ namespace ControllerAPI_1721030861.Models
     {
         [Required(ErrorMessage = "Phone number is required")]
         [RegularExpression(@"^\d{10}$", ErrorMessage = "Phone number length mismatch")]
-        public string phone { get; set; }
+        public string phone { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Email is required")]
         [EmailAddress(ErrorMessage = "Email structure is invalid")]
-        public string email { get; set; }
+        public string email { get; set; } = string.Empty;
     }
 }
