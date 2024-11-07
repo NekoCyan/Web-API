@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
+#pragma warning disable CS8603 // Possible null reference return.
+
 namespace ControllerAPI_1721030861.Repositories.Second_Approach
 {
     public interface IGenericRepository<T> where T : class
@@ -18,10 +20,10 @@ namespace ControllerAPI_1721030861.Repositories.Second_Approach
 
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
-        private readonly APITeachingContext _context;
+        private readonly FinalExamApiContext _context;
         protected readonly DbSet<T> _dbSet;
 
-        public GenericRepository(APITeachingContext context)
+        public GenericRepository(FinalExamApiContext context)
         {
             _context = context;
             _dbSet = _context.Set<T>();

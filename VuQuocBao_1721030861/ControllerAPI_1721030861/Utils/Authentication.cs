@@ -1,5 +1,5 @@
 ﻿using ControllerAPI_1721030861.Database.Models;
-using ControllerAPI_1721030861.Repositories.Simple;
+using ControllerAPI_1721030861.Repositories.First_Approach;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -10,24 +10,24 @@ namespace ControllerAPI_1721030861.Utils
     public class Authentication
     {
         private readonly IConfiguration _configuration;
-        private readonly IAccountService _accountService;
-        public Authentication(IConfiguration configuration, IAccountService accountService)
+        private readonly UserService _userService;
+        public Authentication(IConfiguration configuration, UserService userService)
         {
             _configuration = configuration;
-            _accountService = accountService;
+            _userService = userService;
         }
 
-        public string GenerateAccessToken(Account account)
+        public string GenerateAccessToken(UserApi user)
         {
             var guid = Guid.NewGuid().ToString();
             var authoClaims = new List<Claim>
             {
-                new Claim("Id", account.Id.ToString()),
-                new Claim("UserName", account.UserName!),
-                new Claim(ClaimTypes.Name, account.UserName!),
+                new Claim("Id", user.Id.ToString()),
+                new Claim("UserName", user.UserName!),
+                new Claim(ClaimTypes.Name, user.UserName!),
                 new Claim(ClaimTypes.Role,"Nekowo"), // option role name
                 new Claim(JwtRegisteredClaimNames.Jti, guid),
-                new Claim(JwtRegisteredClaimNames.Email, account.Email!)
+                new Claim(JwtRegisteredClaimNames.Email, user.Email!)
             };
 
             var jwtSettings = _configuration.GetSection("JwtSettings");
@@ -64,10 +64,10 @@ namespace ControllerAPI_1721030861.Utils
 
             var jwtAccountId = jwtAccount.Claims.FirstOrDefault(x => x.Type == "Id")?.Value;
             if (string.IsNullOrEmpty(jwtAccountId)) return ""; // Handle case where Id is not present
-            var account = await _accountService.GetAsync(int.Parse(jwtAccountId));
-            if (account == null) return ""; // Handle case where account is not found
+            var user = await _userService.GetAsync(int.Parse(jwtAccountId));
+            if (user == null) return ""; // Handle case where user is not found
 
-            return GenerateAccessToken(account);
+            return GenerateAccessToken(user);
         }
 
         public bool IsTokenValid(string token)

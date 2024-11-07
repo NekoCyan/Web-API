@@ -6,7 +6,6 @@ using ControllerAPI_1721030861.Repositories.First_Approach;
 using ControllerAPI_1721030861.Repositories.Second_Approach;
 using ControllerAPI_1721030861.Repositories.Simple;
 using ControllerAPI_1721030861.Services;
-using ControllerAPI_1721030861.Utils;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
@@ -24,7 +23,7 @@ namespace ControllerAPI_1721030861.Startup
         {
             // Sql server.
             builder
-                .DbContextRegister<APITeachingContext>("APITeaching");
+                .DbContextRegister<FinalExamApiContext>("FinalExamAPI");
 
             // Scoped.
             builder.AutoScoped();
@@ -103,20 +102,11 @@ namespace ControllerAPI_1721030861.Startup
 
         public static WebApplicationBuilder AutoScoped(this WebApplicationBuilder builder)
         {
-            builder.Services.AddScoped<IAccountService, AccountService>();
-            builder.Services.AddScoped<ICustomerService, CustomerService>();
-            builder.Services.AddScoped<IEmployeeService, EmployeeService>();
-            builder.Services.AddScoped<IRoleUserService, RoleUserService>();
-            builder.Services.AddScoped<IRoleService, RoleService>();
-            builder.Services.AddScoped<IRepository<Address>, AddressService>();
-            builder.Services.AddScoped<IRepository<Country>, CountryService>();
-            builder.Services.AddScoped<IRepository<District>, DistrictService>();
-            builder.Services.AddScoped<IRepository<Province>, ProvinceService>();
-            builder.Services.AddScoped<IRepository<Ward>, WardService>();
+            builder.Services.AddScoped<ICategoryService, CategoryService>();
+            builder.Services.AddScoped<IRepository<UserApi>, UserService>();
+            builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
             builder.Services.AddScoped<Authentication>();
-
-            builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
             return builder;
         }
