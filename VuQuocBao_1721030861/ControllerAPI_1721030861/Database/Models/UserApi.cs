@@ -1,4 +1,6 @@
-﻿namespace ControllerAPI_1721030861.Database.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ControllerAPI_1721030861.Database.Models;
 
 public partial class UserApi
 {
@@ -8,8 +10,10 @@ public partial class UserApi
 
     public string Password { get; set; } = null!;
 
+    [EmailAddress(ErrorMessage = "Email structure is invalid")]
     public string? Email { get; set; }
 
+    [RegularExpression(@"^\d{10}$", ErrorMessage = "Phone number length mismatch")]
     public string? Phone { get; set; }
 
     /// <summary>
@@ -28,8 +32,10 @@ public partial class UserApiDTO
 
     //public string Password { get; set; } = null!;
 
+    [EmailAddress(ErrorMessage = "Email structure is invalid")]
     public string? Email { get; set; }
 
+    [RegularExpression(@"^\d{10}$", ErrorMessage = "Phone number length mismatch")]
     public string? Phone { get; set; }
 
     /// <summary>
@@ -46,8 +52,10 @@ public partial class UserApiDTOWithPasswrd
 
     public string Password { get; set; } = null!;
 
+    [EmailAddress(ErrorMessage = "Email structure is invalid")]
     public string? Email { get; set; }
 
+    [RegularExpression(@"^\d{10}$", ErrorMessage = "Phone number length mismatch")]
     public string? Phone { get; set; }
 
     /// <summary>

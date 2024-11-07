@@ -104,6 +104,9 @@ namespace ControllerAPI_1721030861.Controllers.First_Approach
         [HttpPost, Authorize]
         public async Task<ActionResult<APIResponse>> Create(UserApiDTOWithPasswrd model)
         {
+            var user = _context.UserApis.Where(x => x.UserName == model.UserName);
+            if (user.Count() > 0) return Conflict(new APIResponse(409, "Username already exists"));
+
             // Get Max Id in table of Database --> set for model + 1
             model.Id = await _userService.MaxIdAsync(model.Id) + 1;
 
@@ -121,6 +124,9 @@ namespace ControllerAPI_1721030861.Controllers.First_Approach
         {
             if (_userService.CheckExists(model.Id))
             {
+                var user = _context.UserApis.Where(x => x.UserName == model.UserName);
+                if (user.Count() > 0) return Conflict(new APIResponse(409, "Username already exists"));
+
                 var entity = new UserApi();
                 _mapper.Map(model, entity);
                 if (await _userService.UpdateAsync(entity) != null)
