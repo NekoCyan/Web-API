@@ -10,8 +10,8 @@ namespace ControllerAPI_1721030861.Utils
     public class Authentication
     {
         private readonly IConfiguration _configuration;
-        private readonly UserService _userService;
-        public Authentication(IConfiguration configuration, UserService userService)
+        private readonly IRepository<UserApi> _userService;
+        public Authentication(IConfiguration configuration, IRepository<UserApi> userService)
         {
             _configuration = configuration;
             _userService = userService;

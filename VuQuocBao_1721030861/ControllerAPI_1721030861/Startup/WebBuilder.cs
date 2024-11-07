@@ -6,11 +6,13 @@ using ControllerAPI_1721030861.Repositories.First_Approach;
 using ControllerAPI_1721030861.Repositories.Second_Approach;
 using ControllerAPI_1721030861.Repositories.Simple;
 using ControllerAPI_1721030861.Services;
+using ControllerAPI_1721030861.Utils;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System.Text;
 using System.Threading.RateLimiting;
 using static ControllerAPI_1721030861.Utils.Crypto;
@@ -25,6 +27,9 @@ namespace ControllerAPI_1721030861.Startup
             builder
                 .DbContextRegister<FinalExamApiContext>("FinalExamAPI");
 
+            // AutoMapper.
+            builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
+
             // Scoped.
             builder.AutoScoped();
 
@@ -36,9 +41,6 @@ namespace ControllerAPI_1721030861.Startup
             {
                 options.Filters.Add<MyActionFilter>(); // Add action filter globally.
             });
-
-            // AutoMapper.
-            builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
 
             // Auth.
             builder.AutoAuthentication();
@@ -62,26 +64,57 @@ namespace ControllerAPI_1721030861.Startup
             #endregion
 
             // Rate limit.
-            builder.Services.AddMemoryCache();
-            builder.Services.AddRateLimiter(options =>
+            //builder.Services.AddMemoryCache();
+            //builder.Services.AddRateLimiter(options =>
+            //{
+            //    options.RejectionStatusCode = 429;
+            //    options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(HttpContext => RateLimitPartition.GetFixedWindowLimiter(
+            //        HttpContext.Request.Headers.Host.ToString(),
+            //        partition => new FixedWindowRateLimiterOptions
+            //        {
+            //            AutoReplenishment = true,
+            //            PermitLimit = 10, // Limit 10 requests.
+            //            QueueLimit = 0, // No queue.
+            //            Window = TimeSpan.FromMinutes(1) // Per minute.
+            //        }
+            //    ));
+            //    options.AddFixedWindowLimiter("Fixed", opt =>
+            //    {
+            //        opt.PermitLimit = 5; // Limit 5 requests.
+            //        opt.Window = TimeSpan.FromMinutes(1); // Per minute.
+            //        opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+            //        opt.QueueLimit = 2;
+            //    });
+            //});
+
+            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            builder.Services.AddEndpointsApiExplorer();
+
+            // https://github.com/domaindrivendev/Swashbuckle.AspNetCore/issues/1607#issuecomment-607170559
+            builder.Services.AddSwaggerGen(options =>
             {
-                options.RejectionStatusCode = 429;
-                options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(HttpContext => RateLimitPartition.GetFixedWindowLimiter(
-                    HttpContext.Request.Headers.Host.ToString(),
-                    partition => new FixedWindowRateLimiterOptions
-                    {
-                        AutoReplenishment = true,
-                        PermitLimit = 10, // Limit 10 requests.
-                        QueueLimit = 0, // No queue.
-                        Window = TimeSpan.FromMinutes(1) // Per minute.
-                    }
-                ));
-                options.AddFixedWindowLimiter("Fixed", opt =>
+                options.CustomSchemaIds(type => type.ToString());
+
+                // https://stackoverflow.com/a/64899768
+                var jwtSecurityScheme = new OpenApiSecurityScheme
                 {
-                    opt.PermitLimit = 5; // Limit 5 requests.
-                    opt.Window = TimeSpan.FromMinutes(1); // Per minute.
-                    opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
-                    opt.QueueLimit = 2;
+                    BearerFormat = "JWT",
+                    Name = "JWT Authentication",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    Scheme = JwtBearerDefaults.AuthenticationScheme,
+                    Description = "Put **_ONLY_** your JWT Bearer token on textbox below!",
+
+                    Reference = new OpenApiReference
+                    {
+                        Id = JwtBearerDefaults.AuthenticationScheme,
+                        Type = ReferenceType.SecurityScheme
+                    }
+                };
+                options.AddSecurityDefinition(jwtSecurityScheme.Reference.Id, jwtSecurityScheme);
+                options.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    { jwtSecurityScheme, Array.Empty<string>() }
                 });
             });
 

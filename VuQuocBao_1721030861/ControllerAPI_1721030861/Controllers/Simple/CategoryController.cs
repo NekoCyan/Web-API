@@ -7,12 +7,12 @@ namespace ControllerAPI_1721030861.Controllers.Simple
 {
     [Route("[controller]/[action]")]
     [ApiController]
-    public class CustomerController : ControllerBase
+    public class CategoryController : ControllerBase
     {
         private readonly ICategoryService _cagtegoryService;
         private readonly IMapper _mapper;
 
-        public CustomerController(ICategoryService customerService, IMapper mapper)
+        public CategoryController(ICategoryService customerService, IMapper mapper)
         {
             _cagtegoryService = customerService;
             _mapper = mapper;
@@ -21,13 +21,19 @@ namespace ControllerAPI_1721030861.Controllers.Simple
         [HttpGet]
         public async Task<ActionResult<CategoryApiDTO>> Get(int id)
         {
-            return _mapper.Map<CategoryApiDTO>(await _cagtegoryService.GetAsync(id));
+            var get = await _cagtegoryService.GetAsync(id);
+            if (get == null) return NotFound();
+
+            return _mapper.Map<CategoryApiDTO>(get);
         }
 
         [HttpGet]
         public async Task<ActionResult<CategoryApi>> GetFull(int id)
         {
-            return await _cagtegoryService.GetAsync(id, false);
+            var get = await _cagtegoryService.GetAsync(id, false);
+            if (get == null) return NotFound();
+
+            return get;
         }
 
         [HttpGet]
