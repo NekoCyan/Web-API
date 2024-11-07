@@ -25,7 +25,7 @@ namespace ControllerAPI_1721030861.Middlewares
             if (context.Result is ObjectResult objResult)
             {
                 int statusCode = objResult.StatusCode ?? 200;
-                var res = new APIResponse<object>(statusCode, "Success.", objResult.Value);
+                var res = new APIResponse<object>(statusCode, "Success.", objResult.Value!);
                 context.Result = new ObjectResult(res) { StatusCode = statusCode };
             }
             else if (context.Result is StatusCodeResult statusCodeResult)
