@@ -28,7 +28,7 @@ namespace ControllerAPI_1721030861.Startup
             app.UseAuthorization();
 
             // Security.
-            //app.UseRateLimiter();
+            app.UseRateLimiter();
             app.Use(async (ctx, next) =>
             {
                 ctx.Response.Headers.Append("Content-Security-Policy", "default-src 'self'; script-src 'self';");

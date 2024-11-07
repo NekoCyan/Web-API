@@ -48,44 +48,49 @@ namespace ControllerAPI_1721030861.Startup
             // CORS.
             builder.AutoCORS();
 
+            // Findout - 400 bad requests for non csrf token.
             #region CSRF protection
-            builder.Services.Configure<CookiePolicyOptions>(options =>
-            {
-                options.MinimumSameSitePolicy = SameSiteMode.Strict;
-            });
-            builder.Services.AddControllersWithViews(options =>
-            {
-                options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
-            });
-            builder.Services.AddAntiforgery(options =>
-            {
-                options.HeaderName = "X-CSRF-TOKEN";
-            });
+            //builder.Services.Configure<CookiePolicyOptions>(options =>
+            //{
+            //    options.MinimumSameSitePolicy = SameSiteMode.Strict;
+            //});
+            //builder.Services.AddControllersWithViews(options =>
+            //{
+            //    options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+            //});
+            //builder.Services.AddAntiforgery(options =>
+            //{
+            //    options.HeaderName = "X-CSRF-TOKEN";
+            //});
             #endregion
 
-            // Rate limit.
+            // Memory cache for testing.
             //builder.Services.AddMemoryCache();
-            //builder.Services.AddRateLimiter(options =>
-            //{
-            //    options.RejectionStatusCode = 429;
-            //    options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(HttpContext => RateLimitPartition.GetFixedWindowLimiter(
-            //        HttpContext.Request.Headers.Host.ToString(),
-            //        partition => new FixedWindowRateLimiterOptions
-            //        {
-            //            AutoReplenishment = true,
-            //            PermitLimit = 10, // Limit 10 requests.
-            //            QueueLimit = 0, // No queue.
-            //            Window = TimeSpan.FromMinutes(1) // Per minute.
-            //        }
-            //    ));
-            //    options.AddFixedWindowLimiter("Fixed", opt =>
-            //    {
-            //        opt.PermitLimit = 5; // Limit 5 requests.
-            //        opt.Window = TimeSpan.FromMinutes(1); // Per minute.
-            //        opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
-            //        opt.QueueLimit = 2;
-            //    });
-            //});
+
+            // Rate limit.
+            builder.Services.AddRateLimiter(options =>
+            {
+                options.RejectionStatusCode = 429;
+                // Global limit.
+                options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(HttpContext => RateLimitPartition.GetFixedWindowLimiter(
+                    HttpContext.Request.Headers.Host.ToString(),
+                    partition => new FixedWindowRateLimiterOptions
+                    {
+                        AutoReplenishment = true,
+                        PermitLimit = 10, // Limit 10 requests.
+                        QueueLimit = 0, // No queue.
+                        Window = TimeSpan.FromSeconds(30) // Per minute.
+                    }
+                ));
+                // Option Limit.
+                options.AddFixedWindowLimiter("Fixed", opt =>
+                {
+                    opt.PermitLimit = 5; // Limit 5 requests.
+                    opt.Window = TimeSpan.FromMinutes(1); // Per minute.
+                    opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+                    opt.QueueLimit = 2;
+                });
+            });
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
